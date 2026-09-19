@@ -107,13 +107,24 @@ const InternDetails = ({
                         </div>
                     </div>
 
-                    <div className="rounded-xl bg-gray-50 p-3">
-                        <p className="text-[11px] uppercase tracking-wide text-gray-400">
-                            Reference No
-                        </p>
-                        <p className="mt-0.5 text-sm font-medium text-gray-800">
-                            {selectedIntern.batch?.referenceNo ?? "-"}
-                        </p>
+                    <div className="grid grid-cols-2 gap-3">
+                        <div className="rounded-xl bg-gray-50 p-3">
+                            <p className="text-[11px] uppercase tracking-wide text-gray-400">
+                                Reference No
+                            </p>
+                            <p className="mt-0.5 text-sm font-medium text-gray-800">
+                                {selectedIntern.batch?.referenceNo ?? "-"}
+                            </p>
+                        </div>
+
+                        <div className="rounded-xl bg-gray-50 p-3">
+                            <p className="text-[11px] uppercase tracking-wide text-gray-400">
+                                Location
+                            </p>
+                            <p className="mt-0.5 text-sm font-medium text-gray-800">
+                                {selectedIntern.batch?.location ?? "-"}
+                            </p>
+                        </div>
                     </div>
 
                     {/* Attendance */}

@@ -71,6 +71,7 @@ const DashboardNavbar = () => {
                         <div className="h-full flex items-center justify-center">
                             <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
                                 {sidebarState === "dashboard" && "Dashboard"}
+                                {sidebarState === "teams" && "Teams"}
                                 {sidebarState === "interns" && "Interns"}
                                 {sidebarState === "applications" && "Applications"}
                                 {sidebarState === "projects" && "Projects"}

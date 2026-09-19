@@ -2,14 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import useAdminStore from '../store/useAdminStore';
 import axiosInstance from '../lib/axios';
 import { toast } from 'react-toastify';
+import { batchOptions } from '../lib/batches';
 
 const useAdminHook = () => {
     const [confirmingDelete, setConfirmingDelete] = useState(false);
     const { allInterns, getAllInterns, getAllInternsLoader } = useAdminStore();
-    const [batchFilter, setBatchFilter] = useState(14);
-    const [domainFilter, setDomainFilter] = useState("web");
+    const [batchFilter, setBatchFilter] = useState(0);
+    const [domainFilter, setDomainFilter] = useState("all");
     const [searchQuery, setSearchQuery] = useState("");
-    const [locationFilter, setLocationFilter] = useState("remote");
+    const [locationFilter, setLocationFilter] = useState("all");
     const [selectedIntern, setSelectedIntern] = useState<
         (typeof allInterns)[number] | null
     >(null);
@@ -21,25 +22,18 @@ const useAdminHook = () => {
         getAllInterns();
     }, [getAllInterns]);
 
-    const batchOptions = [14, 15, 16];
-
     const filteredInterns = useMemo(() => {
-        if (!batchFilter || !domainFilter) {
-            return [];
-        }
-
         return allInterns
             .filter((intern) => {
                 const matchesBatch =
-                    intern.batch?.batchId === batchFilter;
+                    batchFilter === 0 || intern.batch?.batchId === batchFilter;
 
                 const matchesDomain =
-                    intern.batch?.domain === domainFilter;
+                    domainFilter === "all" || intern.batch?.domain === domainFilter;
 
                 const matchesLocation =
-                    locationFilter === "remote"
-                        ? intern.batch?.location === "remote"
-                        : intern.batch?.location !== "remote";
+                    locationFilter === "all" ||
+                    intern.batch?.location === locationFilter;
 
                 const matchesSearch =
                     intern.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||

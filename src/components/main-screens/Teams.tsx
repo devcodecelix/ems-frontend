@@ -54,6 +54,7 @@ const Teams = () => {
                             onChange={(e) => setBatchFilter(Number(e.target.value))}
                             className="h-11 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-700 outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900 sm:w-48"
                         >
+                            <option value={0}>All Batches</option>
                             {batchOptions.map((batch) => (
                                 <option key={batch} value={batch}>
                                     Batch {batch}
@@ -66,6 +67,7 @@ const Teams = () => {
                             onChange={(e) => setDomainFilter(e.target.value)}
                             className="h-11 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-700 outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900 sm:w-48"
                         >
+                            <option value="all">All Domains</option>
                             <option value="web">Web</option>
                             <option value="ai">AI</option>
                             <option value="app">App</option>
@@ -76,6 +78,7 @@ const Teams = () => {
                             onChange={(e) => setLocationFilter(e.target.value)}
                             className="h-11 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-700 outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900 sm:w-48"
                         >
+                            <option value="all">All Locations</option>
                             <option value="remote">Remote</option>
                             <option value="onsite">On-site</option>
                         </select>
@@ -155,6 +158,7 @@ const Teams = () => {
                 onOpenChange={(open: any) => {
                     if (!open) {
                         setSelectedIntern(null);
+                        setConfirmingDelete(false); 
                     }
                 }}
             >
