@@ -9,6 +9,7 @@ interface FormState {
     domain: string;
     referenceNo: string;
     name: string;
+    location: string;
 }
 
 interface FieldErrors {
@@ -16,6 +17,7 @@ interface FieldErrors {
     domain?: string;
     referenceNo?: string;
     name?: string;
+    location?: string;
 }
 
 const Application = () => {
@@ -25,6 +27,7 @@ const Application = () => {
         domain: "",
         referenceNo: "",
         name: "",
+        location: "",
     });
 
     const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -38,7 +41,7 @@ const Application = () => {
     }, [user]);
 
     const validate = (): boolean => {
-        const { batchId, domain, referenceNo, name } = form;
+        const { batchId, domain, referenceNo, name, location } = form;
         const errors: FieldErrors = {};
 
         if (!name.trim()) {
@@ -51,6 +54,10 @@ const Application = () => {
 
         if (!domain) {
             errors.domain = "Please select your domain.";
+        }
+
+        if (!location) {
+            errors.location = "Please select your location.";
         }
 
         if (!referenceNo.trim()) {
@@ -80,7 +87,7 @@ const Application = () => {
                     domain: form.domain,
                     referenceNo: form.referenceNo.trim(),
                     name: form.name.trim(),
-                    leader: false,
+                    location: form.location,
                 }
             );
 
@@ -102,6 +109,7 @@ const Application = () => {
         !!form.name.trim() &&
         !!form.batchId &&
         !!form.domain &&
+        !!form.location &&
         !!form.referenceNo.trim();
 
     return (
@@ -191,11 +199,10 @@ const Application = () => {
                                         setFieldErrors((prev) => ({ ...prev, name: undefined }));
                                     }}
                                     placeholder="Enter your full name"
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${
-                                        fieldErrors.name
-                                            ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                            : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
-                                    }`}
+                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.name
+                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
+                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        }`}
                                 />
                             </div>
 
@@ -222,18 +229,19 @@ const Application = () => {
                                         setForm({ ...form, batchId: e.target.value });
                                         setFieldErrors((prev) => ({ ...prev, batchId: undefined }));
                                     }}
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${
-                                        fieldErrors.batchId
-                                            ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                            : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
-                                    }`}
+                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.batchId
+                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
+                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        }`}
                                 >
                                     <option value="">
                                         Select your batch
                                     </option>
+                                    <option value="13">Batch 13</option>
                                     <option value="14">Batch 14</option>
                                     <option value="15">Batch 15</option>
                                     <option value="16">Batch 16</option>
+                                    <option value="17">Batch 17</option>
                                 </select>
                             </div>
 
@@ -260,11 +268,10 @@ const Application = () => {
                                         setForm({ ...form, domain: e.target.value });
                                         setFieldErrors((prev) => ({ ...prev, domain: undefined }));
                                     }}
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${
-                                        fieldErrors.domain
-                                            ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                            : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
-                                    }`}
+                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
+                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
+                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        }`}
                                 >
                                     <option value="">
                                         Select your domain
@@ -272,6 +279,42 @@ const Application = () => {
                                     <option value="web">Web Development</option>
                                     <option value="ai">Artificial Intelligence</option>
                                     <option value="app">App Development</option>
+                                </select>
+                            </div>
+
+                            {/* location */}
+                            <div>
+                                <label
+                                    htmlFor="domain"
+                                    className="mb-2 block text-sm font-medium text-gray-700"
+                                >
+                                    Location
+                                </label>
+
+                                {fieldErrors.location && (
+                                    <p className="mb-1 text-sm text-red-500">
+                                        {fieldErrors.location}
+                                    </p>
+                                )}
+
+                                <select
+                                    id="domain"
+                                    value={form.location}
+                                    disabled={isSubmitting}
+                                    onChange={(e) => {
+                                        setForm({ ...form, location: e.target.value });
+                                        setFieldErrors((prev) => ({ ...prev, location: undefined }));
+                                    }}
+                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
+                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
+                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        }`}
+                                >
+                                    <option value="">
+                                        Select your domain
+                                    </option>
+                                    <option value="onsite">Onsite</option>
+                                    <option value="remote">Remote</option>
                                 </select>
                             </div>
 
@@ -300,11 +343,10 @@ const Application = () => {
                                         setFieldErrors((prev) => ({ ...prev, referenceNo: undefined }));
                                     }}
                                     placeholder="CC101"
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${
-                                        fieldErrors.referenceNo
-                                            ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                            : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
-                                    }`}
+                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.referenceNo
+                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
+                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        }`}
                                 />
                             </div>
 

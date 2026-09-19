@@ -158,6 +158,12 @@ const Applications = () => {
                                                 {app.batch?.referenceNo ?? "-"}
                                             </p>
                                         </div>
+                                        <div>
+                                            <p className="text-[10px] uppercase tracking-wide text-gray-400">Location</p>
+                                            <p className="mt-0.5 truncate font-medium text-gray-700">
+                                                {app.batch?.location ?? "-"}
+                                            </p>
+                                        </div>
                                     </div>
 
                                     {/* Actions */}

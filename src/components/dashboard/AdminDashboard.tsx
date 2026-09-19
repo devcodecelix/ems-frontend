@@ -36,7 +36,7 @@ const AdminDashboard = () => {
         <div className="min-h-screen px-3 py-6 sm:px-6">
             <div className="mx-auto max-w-5xl">
                 {/* Summary stats */}
-                <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
                     <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg">
                         <p className="text-xs text-gray-400">Interns</p>
                         <p className="mt-1 text-2xl font-bold text-gray-900">
@@ -48,6 +48,15 @@ const AdminDashboard = () => {
                         <p className="text-xs text-gray-400">Batches</p>
                         <p className="mt-1 text-2xl font-bold text-gray-900">
                             {stats.totalBatches}
+                        </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg">
+                        <p className="text-xs text-gray-400">Remote / Onsite</p>
+                        <p className="mt-1 text-2xl font-bold text-gray-900">
+                            {allInterns.filter((intern) => intern.batch?.location === "remote").length}{" "}
+                            /{" "}
+                            {allInterns.filter((intern) => intern.batch?.location !== "remote").length}
                         </p>
                     </div>
 

@@ -22,6 +22,8 @@ const Teams = () => {
         deleteInternLoader,
         setConfirmingDelete,
         confirmingDelete,
+        locationFilter,
+        setLocationFilter,
     } = useAdminHook();
 
     if (getAllInternsLoader) {
@@ -68,6 +70,15 @@ const Teams = () => {
                             <option value="ai">AI</option>
                             <option value="app">App</option>
                         </select>
+
+                        <select
+                            value={locationFilter}
+                            onChange={(e) => setLocationFilter(e.target.value)}
+                            className="h-11 w-full rounded-xl border border-gray-300 bg-white px-3 text-sm text-gray-700 outline-none transition focus:border-gray-900 focus:ring-1 focus:ring-gray-900 sm:w-48"
+                        >
+                            <option value="remote">Remote</option>
+                            <option value="onsite">On-site</option>
+                        </select>
                     </div>
 
                     {filteredInterns.length === 0 ? (
@@ -104,7 +115,7 @@ const Teams = () => {
                                     </div>
 
 
-                                    <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-gray-600">
+                                    <div className="mt-3 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-gray-600">
                                         <div>
                                             <span className="text-gray-400">Batch: </span>
                                             {intern.batch?.batchId ?? "-"}
@@ -116,6 +127,10 @@ const Teams = () => {
                                         <div>
                                             <span className="text-gray-400">Ref: </span>
                                             {intern.batch?.referenceNo ?? "-"}
+                                        </div>
+                                        <div>
+                                            <span className="text-gray-400">Location: </span>
+                                            {intern.batch?.location ?? "-"}
                                         </div>
                                     </div>
 

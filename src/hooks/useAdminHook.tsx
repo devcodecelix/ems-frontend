@@ -9,6 +9,7 @@ const useAdminHook = () => {
     const [batchFilter, setBatchFilter] = useState(14);
     const [domainFilter, setDomainFilter] = useState("web");
     const [searchQuery, setSearchQuery] = useState("");
+    const [locationFilter, setLocationFilter] = useState("remote");
     const [selectedIntern, setSelectedIntern] = useState<
         (typeof allInterns)[number] | null
     >(null);
@@ -35,18 +36,23 @@ const useAdminHook = () => {
                 const matchesDomain =
                     intern.batch?.domain === domainFilter;
 
+                const matchesLocation =
+                    locationFilter === "remote"
+                        ? intern.batch?.location === "remote"
+                        : intern.batch?.location !== "remote";
+
                 const matchesSearch =
                     intern.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     intern.email?.toLowerCase().includes(searchQuery.toLowerCase());
 
-                return matchesBatch && matchesDomain && matchesSearch;
+                return matchesBatch && matchesDomain && matchesLocation && matchesSearch;
             })
             .sort((a, b) => {
                 if (a.batch?.leader && !b.batch?.leader) return -1;
                 if (!a.batch?.leader && b.batch?.leader) return 1;
                 return 0;
             });
-    }, [allInterns, batchFilter, domainFilter, searchQuery]);
+    }, [allInterns, batchFilter, domainFilter, searchQuery, locationFilter]);
 
     const makeBatchLeader = async (internId: string, domain: string, batchId: number) => {
         try {
@@ -115,6 +121,8 @@ const useAdminHook = () => {
         deleteInternLoader,
         setConfirmingDelete,
         confirmingDelete,
+        locationFilter,
+        setLocationFilter,
     }
 }
 

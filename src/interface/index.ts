@@ -9,6 +9,7 @@ export interface User {
     domain?: "web" | "ai" | "app";
     referenceNo?: string;
     leader?: boolean;
+    location?: "remote" | "onsite";
   };
   createdAt: Date;
   updatedAt: Date;
@@ -20,4 +21,5 @@ export interface AttendanceRecord {
   batchId: number;
   domain: string;
   date: string;
+  location: string;
 }
