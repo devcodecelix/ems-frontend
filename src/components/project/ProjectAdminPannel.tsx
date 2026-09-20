@@ -209,7 +209,7 @@ const ProjectAdminPannel = () => {
                                 </div>
 
                                 <p className="mb-4 text-xs text-gray-500">
-                                    {project.description}
+                                    {project.description.slice(0, 50)}...
                                 </p>
 
                                 <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
