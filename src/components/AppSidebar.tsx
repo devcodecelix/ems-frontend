@@ -30,6 +30,12 @@ const menuItems = [
     roles: ["admin"],
   },
   {
+    label: "Projects",
+    menu: "projects",
+    icon: LayoutDashboard,
+    roles: ["admin", "intern"],
+  },
+  {
     label: "Applications",
     menu: "applications",
     icon: ClipboardList,

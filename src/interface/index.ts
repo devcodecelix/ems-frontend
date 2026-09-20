@@ -23,3 +23,16 @@ export interface AttendanceRecord {
   date: string;
   location: string;
 }
+
+export interface Project {
+  _id?: string;
+  title: string;
+  description: string;
+  batchId: number;
+  domain: "web" | "ai" | "app";
+  location: "onsite" | "remote";
+  deadline: string; // Date ISO string from API
+  status: "pending" | "completed";
+  createdAt?: string;
+  updatedAt?: string;
+}

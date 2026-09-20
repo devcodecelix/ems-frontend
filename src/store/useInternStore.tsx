@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axiosInstance from "../lib/axios";
-import type { User, AttendanceRecord } from "../interface";
+import type { User, AttendanceRecord, Project } from "../interface";
 import { toast } from "react-toastify";
 
 interface InternState {
@@ -10,13 +10,16 @@ interface InternState {
     }
     allTeamMembers: User[];
     attendance: AttendanceRecord[];
+    projects: Project[];
 
     getAllTeamMembersLoader: boolean;
     getAttendanceLoader: boolean;
+    getAllProjectsLoader: boolean;
 
     getStats: () => Promise<void>;
     getAllTeamMembers: () => Promise<void>;
     getMyAttendance: () => Promise<void>;
+    getAllProjects: () => Promise<void>;
 }
 
 const useInternStore = create<InternState>((set) => ({
@@ -26,9 +29,11 @@ const useInternStore = create<InternState>((set) => ({
     },
     allTeamMembers: [],
     attendance: [],
+    projects: [],
 
     getAllTeamMembersLoader: false,
     getAttendanceLoader: false,
+    getAllProjectsLoader: false,
 
     getStats: async () => {
         try {
@@ -61,6 +66,18 @@ const useInternStore = create<InternState>((set) => ({
             set({ getAttendanceLoader: false });
         }
     },
+    getAllProjects: async () => {
+        try {
+            set({ getAllProjectsLoader: true });
+            const response = await axiosInstance.get("/api/v6/project");
+            set({ projects: response.data });
+        } catch (error) {
+            toast.error("Failed to load projects.");
+            console.error("Error fetching projects:", error);
+        } finally {
+            set({ getAllProjectsLoader: false });
+        }
+    }
 }));
 
 export default useInternStore;
