@@ -6,6 +6,7 @@ import {
   Globe,
   MapPin,
   CheckCircle2,
+  Calendar,
 } from "lucide-react";
 import useInternStore from "../../store/useInternStore";
 import type { Project } from "../../interface";
@@ -116,9 +117,16 @@ const ProjectInternPannel = () => {
                     <MapPin className="h-3.5 w-3.5" />
                     {project.location}
                   </span>
+                  <span className="flex items-center gap-1">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {new Date(project.deadline).toLocaleDateString(
+                      "en-US",
+                      { month: "short", day: "numeric", year: "numeric" }
+                    )}
+                  </span>
                 </div>
 
-                {user?.batch.leader && (
+                {user?.batch.leader && new Date(project.deadline) < new Date() && (
                   <button
                     onClick={() => markAsCompleted(project._id!)}
                     disabled={project.status === "completed"}
