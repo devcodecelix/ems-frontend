@@ -15,7 +15,7 @@ import { batchOptions } from '../../lib/batches';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../lib/axios';
 
-const AddNewProject = ({onSuccess}: {onSuccess: () => void}) => {
+const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
   const { allInterns, getAllInterns, getAllInternsLoader } = useAdminStore();
 
   const [selectedBatch, setSelectedBatch] = useState<string>("");
@@ -26,6 +26,21 @@ const AddNewProject = ({onSuccess}: {onSuccess: () => void}) => {
   const [deadline, setDeadline] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const getTodayLocal = () => {
+    const now = new Date();
+    const offset = now.getTimezoneOffset();
+    const local = new Date(now.getTime() - offset * 60 * 1000);
+    return local.toISOString().split("T")[0];
+  };
+
+  const getMaxDate = () => {
+    const now = new Date();
+    now.setMonth(now.getMonth() + 3);
+    const offset = now.getTimezoneOffset();
+    const local = new Date(now.getTime() - offset * 60 * 1000);
+    return local.toISOString().split("T")[0];
+  };
 
   useEffect(() => {
     if (allInterns.length !== 0) return;
@@ -222,6 +237,8 @@ const AddNewProject = ({onSuccess}: {onSuccess: () => void}) => {
             <input
               type="date"
               value={deadline}
+              min={getTodayLocal()}
+              max={getMaxDate()}
               onChange={(e) => setDeadline(e.target.value)}
               className={inputClass}
             />
