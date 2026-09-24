@@ -193,7 +193,7 @@ const ProjectAdminPannel = () => {
                                 className="rounded-lg border border-slate-200 bg-white p-4 transition hover:border-slate-300"
                             >
                                 <div className="mb-1.5 flex items-start justify-between gap-3">
-                                    <h3 className="text-sm font-semibold leading-snug text-[#0F2D3A]">
+                                    <h3 className="min-w-0 break-words text-sm font-semibold leading-snug text-[#0F2D3A]">
                                         {project.title}
                                     </h3>
                                     <span className="flex shrink-0 items-center gap-1.5 pt-0.5 text-[11px] font-medium text-slate-600">
@@ -230,7 +230,7 @@ const ProjectAdminPannel = () => {
                                     </div>
                                     <button
                                         onClick={() => deleteProject(project._id!)}
-                                        className="text-xs font-medium text-slate-400 transition hover:text-red-600 cursor-pointer"
+                                        className="flex shrink-0 items-center gap-1 rounded-md border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-600 transition hover:border-red-300 hover:bg-red-100 cursor-pointer"
                                     >
                                         Delete
                                     </button>

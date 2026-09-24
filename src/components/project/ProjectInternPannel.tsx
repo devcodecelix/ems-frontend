@@ -88,7 +88,7 @@ const ProjectInternPannel = () => {
             className="rounded-lg border border-slate-200 bg-white p-4"
           >
             <div className="mb-2 flex items-start justify-between gap-3">
-              <h3 className="text-sm font-semibold text-[#0F2D3A]">
+              <h3 className="min-w-0 break-words text-sm font-semibold text-[#0F2D3A]">
                 {project.title}
               </h3>
               {project.status === "completed" && (

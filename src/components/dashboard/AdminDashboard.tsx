@@ -13,6 +13,7 @@ const AdminDashboard = () => {
     });
     const [downloadBatch, setDownloadBatch] = useState<number>(0);
     const [downloadDomain, setDownloadDomain] = useState("web");
+    const [downloadLocation, setDownloadLocation] = useState("remote");
     const [excelLoader, setExcelLoader] = useState(false);
     const [downloadCount, setDownloadCount] = useState(() =>
         Number(localStorage.getItem("attendanceExcelCount") || 0)
@@ -47,6 +48,7 @@ const AdminDashboard = () => {
                     month,
                     batchId: downloadBatch,
                     domain: downloadDomain,
+                    location: downloadLocation,
                 },
                 responseType: "blob",
             });
@@ -55,7 +57,7 @@ const AdminDashboard = () => {
             const link = document.createElement("a");
             link.href = url;
             const nextCount = downloadCount + 1;
-            link.download = `${nextCount}_attendance_batch${downloadBatch}_${downloadDomain}_${month}.xlsx`;
+            link.download = `${nextCount}_attendance_batch${downloadBatch}_${downloadDomain}_${downloadLocation}_${month}.xlsx`;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -81,33 +83,33 @@ const AdminDashboard = () => {
         <div className="min-h-screen bg-[#F7F8F8] px-3 py-6 sm:px-6">
             <div className="mx-auto max-w-3xl">
                 {/* Summary stats */}
-                <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-                    <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <div className="mb-5 grid min-w-0 grid-cols-2 gap-3 sm:grid-cols-4">
+                    <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-4">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Interns</p>
-                        <p className="mt-1 text-2xl font-semibold text-[#0F2D3A]">
+                        <p className="mt-1 break-words text-2xl font-semibold text-[#0F2D3A]">
                             {allInterns.length}
                         </p>
                     </div>
 
-                    <div className="rounded-lg border border-slate-200 bg-white p-4">
+                    <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-4">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Batches</p>
-                        <p className="mt-1 text-2xl font-semibold text-[#0F2D3A]">
+                        <p className="mt-1 break-words text-2xl font-semibold text-[#0F2D3A]">
                             {batchOptions.length}
                         </p>
                     </div>
 
-                    <div className="rounded-lg border border-slate-200 bg-white p-4">
+                    <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-4">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Remote / Onsite</p>
-                        <p className="mt-1 text-2xl font-semibold text-[#0F2D3A]">
+                        <p className="mt-1 break-words text-2xl font-semibold text-[#0F2D3A]">
                             {allInterns.filter((intern) => intern.batch?.location === "remote").length}{" "}
                             /{" "}
                             {allInterns.filter((intern) => intern.batch?.location !== "remote").length}
                         </p>
                     </div>
 
-                    <div className="rounded-lg border border-slate-200 bg-white p-4">
+                    <div className="min-w-0 rounded-lg border border-slate-200 bg-white p-4">
                         <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Web / AI / APP</p>
-                        <p className="mt-1 text-2xl font-semibold text-[#0F2D3A]">
+                        <p className="mt-1 break-words text-2xl font-semibold text-[#0F2D3A]">
                             {stats.byDomain.web} / {stats.byDomain.ai} / {stats.byDomain.app}
                         </p>
                     </div>
@@ -115,20 +117,20 @@ const AdminDashboard = () => {
 
                 {/* Monthly attendance excel export */}
                 <div className="rounded-lg border border-slate-200 bg-white p-4">
-                    <div className="mb-3 flex items-center gap-2">
-                        <FileSpreadsheet className="h-4 w-4 text-[#0A7E84]" />
-                        <div>
+                    <div className="mb-3 flex min-w-0 items-center gap-2">
+                        <FileSpreadsheet className="h-4 w-4 shrink-0 text-[#0A7E84]" />
+                        <div className="min-w-0">
                             <h2 className="text-sm font-semibold text-[#0F2D3A]">
                                 Monthly Attendance (Excel)
                             </h2>
-                            <p className="text-xs text-slate-500">
+                            <p className="break-words text-xs text-slate-500">
                                 Download the monthly attendance sheet of a batch
                             </p>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
-                        <div className="flex flex-1 flex-col gap-1">
+                        <div className="flex min-w-0 flex-1 flex-col gap-1">
                             <label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
                                 Month
                             </label>
@@ -136,11 +138,11 @@ const AdminDashboard = () => {
                                 type="month"
                                 value={month}
                                 onChange={(e) => setMonth(e.target.value)}
-                                className="h-10 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84]"
+                                className="h-10 w-full min-w-0 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84] [&::-webkit-datetime-edit]:block [&::-webkit-datetime-edit]:w-full [&::-webkit-datetime-edit-fields-wrapper]:flex [&::-webkit-datetime-edit-fields-wrapper]:flex-nowrap [&::-webkit-datetime-edit-fields-wrapper]:overflow-visible"
                             />
                         </div>
 
-                        <div className="flex flex-1 flex-col gap-1">
+                        <div className="flex min-w-0 flex-1 flex-col gap-1">
                             <label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
                                 Batch
                             </label>
@@ -158,7 +160,7 @@ const AdminDashboard = () => {
                             </select>
                         </div>
 
-                        <div className="flex flex-1 flex-col gap-1">
+                        <div className="flex min-w-0 flex-1 flex-col gap-1">
                             <label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
                                 Domain
                             </label>
@@ -170,6 +172,20 @@ const AdminDashboard = () => {
                                 <option value="web">Web</option>
                                 <option value="ai">AI</option>
                                 <option value="app">App</option>
+                            </select>
+                        </div>
+
+                        <div className="flex min-w-0 flex-1 flex-col gap-1">
+                            <label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
+                                Location
+                            </label>
+                            <select
+                                value={downloadLocation}
+                                onChange={(e) => setDownloadLocation(e.target.value)}
+                                className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84]"
+                            >
+                                <option value="remote">Remote</option>
+                                <option value="onsite">Onsite</option>
                             </select>
                         </div>
 

@@ -48,9 +48,9 @@ const MyAttendance = ({ getMyAttendance, getAttendanceLoader, attendance }: {
                                 return (
                                     <div
                                         key={record._id}
-                                        className="flex items-center justify-between rounded-md border border-slate-100 bg-slate-50 px-3 py-2"
+                                        className="flex min-w-0 items-center justify-between gap-3 rounded-md border border-slate-100 bg-slate-50 px-3 py-2"
                                     >
-                                        <p className="text-sm font-medium text-slate-700">
+                                        <p className="min-w-0 truncate text-sm font-medium text-slate-700">
                                             {new Date(record.date).toLocaleDateString("en-US", {
                                                 weekday: "long",
                                                 year: "numeric",
@@ -59,7 +59,7 @@ const MyAttendance = ({ getMyAttendance, getAttendanceLoader, attendance }: {
                                             })}
                                         </p>
                                         <span
-                                            className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                                            className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
                                                 isPresent
                                                     ? "bg-green-100 text-green-700"
                                                     : "bg-red-100 text-red-700"

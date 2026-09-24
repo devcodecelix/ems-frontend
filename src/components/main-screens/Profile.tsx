@@ -51,19 +51,19 @@ const Profile = () => {
                     </div>
 
                     <div className="mt-6 space-y-4 border-t border-slate-100 pt-5">
-                        {user.role !== "admin" && <div className="flex items-center justify-between text-sm">
-                            <span className="flex items-center gap-2 text-slate-500">
+                        {user.role !== "admin" && <div className="flex items-center justify-between gap-3 text-sm">
+                            <span className="flex shrink-0 items-center gap-2 text-slate-500">
                                 <Layers className="h-4 w-4" />
                                 Batch
                             </span>
-                            <span className="text-slate-700">
+                            <span className="min-w-0 text-right text-slate-700">
                                 {user.name ?? "-"}
                                 {user.batch?.batchId ? ` (#${user.batch.batchId})` : ""}
                             </span>
                         </div>}
 
-                        {user.role !== "admin" && <div className="flex items-center justify-between text-sm">
-                            <span className="flex items-center gap-2 text-slate-500">
+                        {user.role !== "admin" && <div className="flex items-center justify-between gap-3 text-sm">
+                            <span className="flex shrink-0 items-center gap-2 text-slate-500">
                                 <Shield className="h-4 w-4" />
                                 Team
                             </span>
@@ -80,16 +80,16 @@ const Profile = () => {
                             )}
                         </div>}
 
-                        {user.role !== "admin" && <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-500">Reference No</span>
-                            <span className="text-slate-700">
+                        {user.role !== "admin" && <div className="flex items-center justify-between gap-3 text-sm">
+                            <span className="shrink-0 text-slate-500">Reference No</span>
+                            <span className="min-w-0 text-right break-words text-slate-700">
                                 {user.batch?.referenceNo ?? "-"}
                             </span>
                         </div>}
 
-                        <div className="flex items-center justify-between text-sm">
-                            <span className="text-slate-500">Joined</span>
-                            <span className="text-slate-700">
+                        <div className="flex items-center justify-between gap-3 text-sm">
+                            <span className="shrink-0 text-slate-500">Joined</span>
+                            <span className="min-w-0 text-right break-words text-slate-700">
                                 {new Date(user.createdAt).toLocaleDateString()}
                             </span>
                         </div>
