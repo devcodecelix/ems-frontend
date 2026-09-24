@@ -7,26 +7,26 @@ const InternDashboard = () => {
 
     if (getAllTeamMembersLoader) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+            <div className="flex min-h-screen items-center justify-center bg-[#F7F8F8]">
+                <Loader2 className="h-8 w-8 animate-spin text-[#0A7E84]" />
             </div>
         );
     }
 
     return (
-        <div className="min-h-screen px-3 py-6 sm:px-6">
-            <div className="mx-auto max-w-5xl">
+        <div className="min-h-screen bg-[#F7F8F8] px-3 py-6 sm:px-6">
+            <div className="mx-auto max-w-4xl">
                 {/* Summary stats */}
                 <div className="mb-5 grid grid-cols-2 gap-3 sm:grid-cols-2">
-                    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg">
-                        <p className="text-xs text-gray-400">Team Members</p>
-                        <p className="mt-1 text-2xl font-bold text-gray-900">
+                    <div className="rounded-lg border border-slate-200 bg-white p-4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Team Members</p>
+                        <p className="mt-1 text-2xl font-semibold text-[#0F2D3A]">
                             {stats.batchInternCount}
                         </p>
                     </div>
-                    <div className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg">
-                        <p className="text-xs text-gray-400">Leader</p>
-                        <p className="mt-1 text-2xl font-bold text-gray-900">
+                    <div className="rounded-lg border border-slate-200 bg-white p-4">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">Leader</p>
+                        <p className="mt-1 text-2xl font-semibold text-[#0F2D3A]">
                             {stats.batchLeader}
                         </p>
                     </div>
@@ -34,7 +34,7 @@ const InternDashboard = () => {
 
                 {
                     allTeamMembers.length === 0 ? (
-                        <div className="rounded-2xl border border-gray-200 bg-white p-8 text-center text-sm text-gray-500 shadow-lg">
+                        <div className="rounded-lg border border-dashed border-slate-200 bg-white p-10 text-center text-sm text-slate-500">
                             No interns found.
                         </div>
                     ) : (
@@ -42,41 +42,41 @@ const InternDashboard = () => {
                             {allTeamMembers.map((intern) => (
                                 <div
                                     key={intern._id}
-                                    className="rounded-2xl border border-gray-200 bg-white p-4 shadow-lg"
+                                    className="rounded-lg border border-slate-200 bg-white p-4"
                                 >
                                     <div className="flex flex-col lg:flex-row items-start justify-between gap-3">
                                         <div className="flex min-w-0 items-center gap-3">
-                                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gray-100">
-                                                <Users className="h-5 w-5 text-gray-500" />
+                                            <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-100">
+                                                <Users className="h-5 w-5 text-[#0A7E84]" />
                                             </div>
 
                                             <div className="min-w-0">
-                                                <p className="truncate text-sm font-medium text-gray-900">
+                                                <p className="truncate text-sm font-medium text-slate-700">
                                                     {intern.email}
                                                 </p>
-                                                <p className="mt-0.5 text-xs text-gray-500">
+                                                <p className="mt-0.5 text-xs text-slate-500">
                                                     {intern.name ?? "-"}
                                                 </p>
                                             </div>
                                         </div>
                                         {intern.batch?.leader && (
-                                            <span className="mt-3 inline-block rounded-full bg-blue-100 px-2 py-1 text-xs font-medium text-blue-700">
+                                            <span className="mt-3 inline-block rounded-full bg-[#BFE9E6] px-2 py-1 text-xs font-medium text-[#0A7E84]">
                                                 Batch Leader
                                             </span>
                                         )}
                                     </div>
 
-                                    <div className="mt-3 grid grid-cols-3 gap-2 text-xs text-gray-600">
+                                    <div className="mt-3 grid grid-cols-3 gap-2 border-t border-slate-100 pt-3 text-xs text-slate-600">
                                         <div>
-                                            <span className="text-gray-400">Batch: </span>
+                                            <span className="text-slate-400">Batch: </span>
                                             {intern.batch?.batchId ?? "-"}
                                         </div>
                                         <div>
-                                            <span className="text-gray-400">Team: </span>
+                                            <span className="text-slate-400">Team: </span>
                                             {intern.batch?.domain ?? "-"}
                                         </div>
                                         <div>
-                                            <span className="text-gray-400">Ref: </span>
+                                            <span className="text-slate-400">Ref: </span>
                                             {intern.batch?.referenceNo ?? "-"}
                                         </div>
                                     </div>

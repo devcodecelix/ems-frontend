@@ -113,7 +113,7 @@ const Application = () => {
         !!form.referenceNo.trim();
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-10">
+        <div className="flex min-h-screen items-center justify-center bg-[#F7F8F8] px-4 py-10">
             <div className="w-full max-w-sm">
                 {/* Header */}
                 <div className="mb-8 flex flex-col items-center text-center">
@@ -123,19 +123,19 @@ const Application = () => {
                         className="h-14 w-auto"
                     />
 
-                    <h1 className="mt-4 text-2xl font-bold text-gray-900">
+                    <h1 className="mt-4 text-xl font-semibold text-[#0F2D3A]">
                         Internship Application
                     </h1>
 
                     {!alreadySubmitted && (
-                        <p className="mt-2 text-sm text-gray-500">
+                        <p className="mt-2 text-sm text-slate-500">
                             Complete your application to continue
                         </p>
                     )}
                 </div>
 
                 {/* Card */}
-                <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
+                <div className="rounded-lg border border-slate-200 bg-white p-6">
                     {alreadySubmitted ? (
                         <div className="py-6 text-center">
                             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
@@ -155,16 +155,16 @@ const Application = () => {
                                 </svg>
                             </div>
 
-                            <h2 className="text-lg font-semibold text-gray-900">
+                            <h2 className="text-lg font-semibold text-[#0F2D3A]">
                                 Application Submitted
                             </h2>
 
-                            <p className="mt-2 text-sm text-gray-500">
+                            <p className="mt-2 text-sm text-slate-500">
                                 Your application has been submitted
                                 successfully.
                             </p>
 
-                            <p className="mt-1 text-sm text-gray-500">
+                            <p className="mt-1 text-sm text-slate-500">
                                 Please wait for further updates.
                             </p>
                         </div>
@@ -178,7 +178,7 @@ const Application = () => {
                             <div>
                                 <label
                                     htmlFor="name"
-                                    className="mb-2 block text-sm font-medium text-gray-700"
+                                    className="mb-2 block text-sm font-medium text-slate-700"
                                 >
                                     Name
                                 </label>
@@ -199,9 +199,9 @@ const Application = () => {
                                         setFieldErrors((prev) => ({ ...prev, name: undefined }));
                                     }}
                                     placeholder="Enter your full name"
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.name
+                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.name
                                         ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
                                         }`}
                                 />
                             </div>
@@ -210,7 +210,7 @@ const Application = () => {
                             <div>
                                 <label
                                     htmlFor="batchId"
-                                    className="mb-2 block text-sm font-medium text-gray-700"
+                                    className="mb-2 block text-sm font-medium text-slate-700"
                                 >
                                     Batch
                                 </label>
@@ -229,9 +229,9 @@ const Application = () => {
                                         setForm({ ...form, batchId: e.target.value });
                                         setFieldErrors((prev) => ({ ...prev, batchId: undefined }));
                                     }}
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.batchId
+                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.batchId
                                         ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
                                         }`}
                                 >
                                     <option value="">
@@ -249,7 +249,7 @@ const Application = () => {
                             <div>
                                 <label
                                     htmlFor="domain"
-                                    className="mb-2 block text-sm font-medium text-gray-700"
+                                    className="mb-2 block text-sm font-medium text-slate-700"
                                 >
                                     Domain
                                 </label>
@@ -268,9 +268,9 @@ const Application = () => {
                                         setForm({ ...form, domain: e.target.value });
                                         setFieldErrors((prev) => ({ ...prev, domain: undefined }));
                                     }}
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
+                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
                                         ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
                                         }`}
                                 >
                                     <option value="">
@@ -286,7 +286,7 @@ const Application = () => {
                             <div>
                                 <label
                                     htmlFor="domain"
-                                    className="mb-2 block text-sm font-medium text-gray-700"
+                                    className="mb-2 block text-sm font-medium text-slate-700"
                                 >
                                     Location
                                 </label>
@@ -305,9 +305,9 @@ const Application = () => {
                                         setForm({ ...form, location: e.target.value });
                                         setFieldErrors((prev) => ({ ...prev, location: undefined }));
                                     }}
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
+                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
                                         ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
                                         }`}
                                 >
                                     <option value="">
@@ -322,7 +322,7 @@ const Application = () => {
                             <div>
                                 <label
                                     htmlFor="referenceNo"
-                                    className="mb-2 block text-sm font-medium text-gray-700"
+                                    className="mb-2 block text-sm font-medium text-slate-700"
                                 >
                                     Reference Number
                                 </label>
@@ -343,9 +343,9 @@ const Application = () => {
                                         setFieldErrors((prev) => ({ ...prev, referenceNo: undefined }));
                                     }}
                                     placeholder="CC101"
-                                    className={`h-11 w-full rounded-xl border bg-white px-3 text-sm text-gray-700 outline-none transition placeholder:text-gray-400 focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.referenceNo
+                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.referenceNo
                                         ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-gray-300 focus:border-gray-900 focus:ring-gray-900"
+                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
                                         }`}
                                 />
                             </div>
@@ -354,7 +354,7 @@ const Application = () => {
                             <button
                                 type="submit"
                                 disabled={isSubmitting || !isFormComplete}
-                                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gray-900 px-4 py-3 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70"
+                                className="flex w-full items-center justify-center gap-2 rounded-md bg-[#0A7E84] px-4 py-3 text-sm font-medium text-white transition hover:bg-[#075F64] disabled:cursor-not-allowed disabled:opacity-70"
                             >
                                 {isSubmitting ? (
                                     <>
@@ -374,7 +374,7 @@ const Application = () => {
                     <div className="mt-6 text-center">
                         <button
                             onClick={useAuthStore.getState().logout}
-                            className="text-sm font-medium text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded-lg transition"
+                            className="text-sm font-medium text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded-md transition"
                         >
                             Logout
                         </button>

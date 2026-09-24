@@ -107,23 +107,23 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
   };
 
   const selectClass =
-    "w-full appearance-none rounded-xl border border-gray-200 bg-gray-50 px-3 py-2.5 pl-9 text-sm text-gray-800 outline-none transition focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100";
+    "w-full appearance-none rounded-md border border-slate-200 bg-white px-3 py-2.5 pl-9 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84]";
 
   const inputClass =
-    "w-full rounded-xl border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-sm text-gray-800 outline-none transition placeholder:text-gray-400 focus:border-blue-400 focus:bg-white focus:ring-2 focus:ring-blue-100";
+    "w-full rounded-md border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84]";
 
   return (
     <DialogContent className="sm:max-w-lg">
       <DialogHeader>
         <DialogTitle className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-200">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md bg-[#0A7E84]">
             <FolderKanban className="h-5 w-5 text-white" />
           </div>
           <div className="min-w-0">
-            <p className="truncate text-sm font-semibold text-gray-900">
+            <p className="truncate text-sm font-semibold text-slate-800">
               Assign Project
             </p>
-            <p className="truncate text-xs font-normal text-gray-500">
+            <p className="truncate text-xs font-normal text-slate-500">
               Assign a new project to any team/batch
             </p>
           </div>
@@ -132,18 +132,18 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
 
       {getAllInternsLoader ? (
         <div className="flex items-center justify-center py-16">
-          <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+          <Loader2 className="h-6 w-6 animate-spin text-[#0A7E84]" />
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-5 pt-2">
           {/* Batch / Domain / Location — grouped */}
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-gray-600">
+              <label className="mb-1.5 block text-xs font-medium text-slate-600">
                 Team (Batch)
               </label>
               <div className="relative">
-                <Users className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <Users className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <select
                   value={selectedBatch}
                   onChange={(e) => setSelectedBatch(e.target.value)}
@@ -160,11 +160,11 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-gray-600">
+              <label className="mb-1.5 block text-xs font-medium text-slate-600">
                 Team (Domain)
               </label>
               <div className="relative">
-                <Globe className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <Globe className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <select
                   value={selectedDomain}
                   onChange={(e) => setSelectedDomain(e.target.value)}
@@ -179,11 +179,11 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
             </div>
 
             <div>
-              <label className="mb-1.5 block text-xs font-medium text-gray-600">
+              <label className="mb-1.5 block text-xs font-medium text-slate-600">
                 Team (Location)
               </label>
               <div className="relative">
-                <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                <MapPin className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
                 <select
                   value={selectedLocation}
                   onChange={(e) => setSelectedLocation(e.target.value)}
@@ -197,11 +197,11 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
             </div>
           </div>
 
-          <div className="h-px bg-gray-100" />
+          <div className="h-px bg-slate-100" />
 
           {/* Project title */}
           <div>
-            <label className="mb-1.5 block text-xs font-medium text-gray-600">
+            <label className="mb-1.5 block text-xs font-medium text-slate-600">
               Project Title
             </label>
             <input
@@ -215,7 +215,7 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
 
           {/* Description */}
           <div>
-            <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-gray-600">
+            <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-slate-600">
               <FileText className="h-3.5 w-3.5" />
               Description
             </label>
@@ -230,7 +230,7 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
 
           {/* Deadline */}
           <div>
-            <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-gray-600">
+            <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-slate-600">
               <Calendar className="h-3.5 w-3.5" />
               Deadline
             </label>
@@ -246,7 +246,7 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
 
           {/* Feedback messages */}
           {errorMessage && (
-            <div className="flex items-start gap-2 rounded-xl bg-red-50 px-3.5 py-2.5 text-xs font-medium text-red-600">
+            <div className="flex items-start gap-2 rounded-md bg-red-50 px-3.5 py-2.5 text-xs font-medium text-red-600">
               <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0" />
               {errorMessage}
             </div>
@@ -255,7 +255,7 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-sm font-medium text-white shadow-sm shadow-blue-200 transition hover:bg-blue-700 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-md bg-[#0A7E84] py-3 text-sm font-medium text-white transition hover:bg-[#075F64] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
             {isSubmitting ? "Assigning..." : "Assign Project"}

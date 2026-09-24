@@ -28,7 +28,7 @@ const DashboardNavbar = () => {
             <DropdownMenuGroup>
                 <DropdownMenuLabel className="font-normal">
                     <p className="text-xs text-slate-400">Signed in as</p>
-                    <p className="text-sm font-medium text-slate-900 truncate mt-0.5">
+                    <p className="text-sm font-medium text-slate-800 truncate mt-0.5">
                         {user?.email || "Unknown"}
                     </p>
                 </DropdownMenuLabel>
@@ -47,21 +47,21 @@ const DashboardNavbar = () => {
     );
 
     return (
-        <header className="w-full border-b border-slate-200 bg-white/90 backdrop-blur-xl">
-            <div className="flex min-h-21 items-center justify-between gap-4 px-4 sm:px-6">
+        <header className="w-full border-b border-slate-200 bg-white">
+            <div className="flex min-h-16 items-center justify-between gap-4 px-4 sm:px-6">
                 {/* Left Side */}
                 <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-                    <SidebarTrigger className="text-slate-500 hover:text-slate-900" />
+                    <SidebarTrigger className="text-slate-500 hover:text-[#0A7E84]" />
                     <Separator orientation="vertical" className="h-6 hidden sm:block" />
 
                     <div className="flex min-w-0 items-center gap-3">
                         {sidebarState === "create-resume" && (
                             <div className="flex items-center gap-4">
                                 <div>
-                                    <h1 className="text-xl font-extrabold md:text-2xl">
-                                        Create Resume
-                                    </h1>
-                                    <p className="text-sm text-gray-600 md:text-base">
+<h1 className="text-lg font-extrabold text-[#0F2D3A] sm:text-xl">
+                                            Create Resume
+                                        </h1>
+                                    <p className="text-sm text-slate-600 md:text-base">
                                         Create Your Professional Resume
                                     </p>
                                 </div>
@@ -69,7 +69,7 @@ const DashboardNavbar = () => {
                         )}
 
                         <div className="h-full flex items-center justify-center">
-                            <h1 className="text-xl font-bold text-gray-900 sm:text-2xl">
+                            <h1 className="text-lg font-semibold text-[#0F2D3A] sm:text-xl">
                                 {sidebarState === "dashboard" && "Dashboard"}
                                 {sidebarState === "teams" && "Teams"}
                                 {sidebarState === "interns" && "Interns"}
@@ -89,10 +89,10 @@ const DashboardNavbar = () => {
                             render={
                                 <button
                                     type="button"
-                                    className="hidden sm:flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 hover:bg-slate-100 hover:border-slate-300 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                                    className="hidden sm:flex items-center gap-2 rounded-md border border-slate-200 bg-white px-3 py-1.5 hover:bg-slate-50 hover:border-slate-300 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#0A7E84]"
                                 >
                                     <Mail className="h-3.5 w-3.5 text-slate-400" />
-                                    <p className="max-w-40 truncate text-xs font-medium text-slate-600">
+                                    <p className="max-w-40 truncate text-xs font-medium text-slate-700">
                                         {user?.email || "Email"}
                                     </p>
                                     <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
@@ -109,7 +109,7 @@ const DashboardNavbar = () => {
                             render={
                                 <button
                                     type="button"
-                                    className="sm:hidden flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-600 hover:bg-slate-200 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+                                    className="sm:hidden flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[#0A7E84]"
                                 >
                                     {emailInitial}
                                 </button>

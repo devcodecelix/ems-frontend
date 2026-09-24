@@ -95,14 +95,19 @@ const useAttendanceHook = () => {
         try {
             setIsSaving(true);
 
-            const referenceNos = allTeamMembers
+            const presentReferenceNos = allTeamMembers
                 .filter((member) => presentIds.includes(member._id))
+                .map((member) => member.batch.referenceNo);
+
+            const absentReferenceNos = allTeamMembers
+                .filter((member) => !presentIds.includes(member._id))
                 .map((member) => member.batch.referenceNo);
 
             await axiosInstance.post("/api/v4/attendance", {
                 batchId: allTeamMembers[0]?.batch.batchId,
                 domain: allTeamMembers[0]?.batch.domain,
-                referenceNos,
+                referenceNos: presentReferenceNos,
+                absentReferenceNos,
             });
 
             toast.success("Attendance saved successfully.");

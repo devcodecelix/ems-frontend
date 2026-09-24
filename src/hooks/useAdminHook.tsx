@@ -15,6 +15,7 @@ const useAdminHook = () => {
         (typeof allInterns)[number] | null
     >(null);
     const [batchLoader, setBatchLoader] = useState(false);
+    const [removeLeaderLoader, setRemoveLeaderLoader] = useState(false);
     const [deleteInternLoader, setDeleteInternLoader] = useState(false);
 
     useEffect(() => {
@@ -48,7 +49,23 @@ const useAdminHook = () => {
             });
     }, [allInterns, batchFilter, domainFilter, searchQuery, locationFilter]);
 
-    const makeBatchLeader = async (internId: string, domain: string, batchId: number) => {
+    const makeBatchLeader = async (internId: string, domain: string, batchId: number, location: string) => {
+        const existingLeader = allInterns.find(
+            (intern) =>
+                intern._id !== internId &&
+                intern.batch?.batchId === batchId &&
+                intern.batch?.domain === domain &&
+                intern.batch?.location === location &&
+                intern.batch?.leader
+        );
+
+        if (existingLeader) {
+            toast.info(
+                "This batch already has a batch leader. Remove the current leader first."
+            );
+            return;
+        }
+
         try {
             setBatchLoader(true);
             await axiosInstance.post(`/api/v5/admin/admin/make-batch-leader`, {
@@ -58,7 +75,9 @@ const useAdminHook = () => {
             useAdminStore.setState((state) => ({
                 allInterns: state.allInterns.map((intern) => {
                     const isSameBatch =
-                        intern.batch?.domain === domain && intern.batch?.batchId === batchId;
+                        intern.batch?.domain === domain &&
+                        intern.batch?.batchId === batchId &&
+                        intern.batch?.location === location;
 
                     if (!isSameBatch) return intern;
 
@@ -77,6 +96,40 @@ const useAdminHook = () => {
             toast.error("Failed to make batch leader.");
         } finally {
             setBatchLoader(false);
+        }
+    };
+
+    const removeBatchLeader = async (internId: string, domain: string, batchId: number, location: string) => {
+        try {
+            setRemoveLeaderLoader(true);
+            await axiosInstance.post(`/api/v5/admin/admin/remove-batch-leader`, {
+                internId,
+            });
+
+            useAdminStore.setState((state) => ({
+                allInterns: state.allInterns.map((intern) => {
+                    const isSameBatch =
+                        intern.batch?.domain === domain &&
+                        intern.batch?.batchId === batchId &&
+                        intern.batch?.location === location;
+
+                    if (!isSameBatch) return intern;
+
+                    return {
+                        ...intern,
+                        batch: {
+                            ...intern.batch,
+                            leader: false,
+                        },
+                    };
+                }),
+            }));
+
+            setSelectedIntern(null);
+        } catch (error) {
+            toast.error("Failed to remove batch leader.");
+        } finally {
+            setRemoveLeaderLoader(false);
         }
     };
 
@@ -107,10 +160,13 @@ const useAdminHook = () => {
         setSelectedIntern,
         batchOptions,
         filteredInterns,
+        allInterns,
         getAllInternsLoader,
         batchLoader,
         setBatchLoader,
         makeBatchLeader,
+        removeBatchLeader,
+        removeLeaderLoader,
         deleteIntern,
         deleteInternLoader,
         setConfirmingDelete,

@@ -22,6 +22,7 @@ export interface AttendanceRecord {
   domain: string;
   date: string;
   location: string;
+  status?: "present" | "absent";
 }
 
 export interface Project {

@@ -10,7 +10,7 @@ import Attendance from "./main-screens/Attendance"
 const MainScreen = () => {
     const { sidebarState } = useSidebarStore()
     return (
-        <div className="flex h-screen w-full overflow-hidden bg-slate-50">
+        <div className="flex h-screen w-full overflow-hidden bg-[#F7F8F8]">
             <div className="flex h-full w-full flex-col">
                 <DashboardNavbar />
 

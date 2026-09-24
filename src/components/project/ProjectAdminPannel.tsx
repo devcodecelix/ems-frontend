@@ -1,14 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import {
-    Calendar,
-    CheckCircle2,
-    Clock,
-    AlertTriangle,
     FolderKanban,
     Plus,
-    Users,
-    Globe,
-    MapPin,
     Loader2,
 } from "lucide-react";
 import AddNewProject from "../project/AddNewProject";
@@ -31,24 +24,21 @@ const getStatus = (project: Project): ProjectStatus => {
     return isOverdue ? "overdue" : "pending";
 };
 
-const statusStyles: Record<
+const statusMeta: Record<
     ProjectStatus,
-    { label: string; badge: string; icon: React.ElementType }
+    { label: string; dot: string }
 > = {
     submitted: {
         label: "Submitted",
-        badge: "bg-green-50 text-green-600",
-        icon: CheckCircle2,
+        dot: "bg-green-500",
     },
     pending: {
         label: "Pending",
-        badge: "bg-amber-50 text-amber-600",
-        icon: Clock,
+        dot: "bg-amber-500",
     },
     overdue: {
         label: "Overdue",
-        badge: "bg-red-50 text-red-600",
-        icon: AlertTriangle,
+        dot: "bg-red-500",
     },
 };
 
@@ -118,22 +108,17 @@ const ProjectAdminPannel = () => {
         <div className="mx-auto max-w-5xl">
             {/* Header */}
             <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-linear-to-br from-blue-500 to-blue-600 shadow-sm shadow-blue-200">
-                        <FolderKanban className="h-5 w-5 text-white" />
-                    </div>
                     <div>
-                        <h1 className="text-lg font-semibold text-gray-900">
+                        <h1 className="text-xl font-semibold text-[#0F2D3A]">
                             Projects
                         </h1>
-                        <p className="text-xs text-gray-500">
+                        <p className="mt-0.5 text-xs text-slate-500">
                             Manage projects assigned to teams/batches
                         </p>
                     </div>
-                </div>
 
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-                    <DialogTrigger className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-medium text-white shadow-sm shadow-blue-200 transition hover:bg-blue-700 active:scale-[0.99]">
+                    <DialogTrigger className="flex items-center gap-2 rounded-md bg-[#0A7E84] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#075F64]">
                         <Plus className="h-4 w-4" />
                         Add Project
                     </DialogTrigger>
@@ -154,16 +139,16 @@ const ProjectAdminPannel = () => {
                         <button
                             key={option.key}
                             onClick={() => setActiveFilter(option.key)}
-                            className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition ${isActive
-                                ? "border-blue-600 bg-blue-600 text-white"
-                                : "border-gray-200 bg-white text-gray-600 hover:border-blue-200 hover:text-blue-600"
+                            className={`flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium transition ${isActive
+                                ? "border-[#0A7E84] bg-[#BFE9E6] text-[#0A7E84]"
+                                : "border-slate-200 bg-white text-slate-600 hover:border-[#0A7E84] hover:text-[#0A7E84]"
                                 }`}
                         >
                             {option.label}
                             <span
                                 className={`rounded-full px-1.5 text-[10px] ${isActive
-                                    ? "bg-white/20 text-white"
-                                    : "bg-gray-100 text-gray-500"
+                                    ? "bg-white text-[#0A7E84]"
+                                    : "bg-slate-100 text-slate-500"
                                     }`}
                             >
                                 {counts[option.key]}
@@ -176,66 +161,78 @@ const ProjectAdminPannel = () => {
             {/* Project list */}
             {getAllProjectsLoader ? (
                 <div className="flex items-center justify-center py-24">
-                    <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+                    <Loader2 className="h-8 w-8 animate-spin text-[#0A7E84]" />
                 </div>
             ) : filteredProjects.length === 0 ? (
-                <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-gray-200 bg-white py-16 text-center">
-                    <FolderKanban className="mb-3 h-8 w-8 text-gray-300" />
-                    <p className="text-sm font-medium text-gray-500">
+                <div className="flex flex-col items-center justify-center rounded-lg border border-dashed border-slate-200 bg-white py-12 text-center">
+                    <FolderKanban className="mb-3 h-8 w-8 text-slate-300" />
+                    <p className="text-sm font-medium text-slate-500">
                         No projects in this filter
                     </p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {filteredProjects.map((project) => {
-                        const status = statusStyles[project.status];
-                        const StatusIcon = status.icon;
+                        const status = statusMeta[project.status];
+                        const deadline = new Date(project.deadline);
+                        const diffDays = Math.round(
+                            (deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
+                        );
+                        const isOverdue = project.status === "overdue";
+                        const dueLabel = isOverdue
+                            ? diffDays <= 0
+                                ? "Overdue today"
+                                : `${Math.abs(diffDays)} days overdue`
+                            : diffDays <= 0
+                                ? "Due today"
+                                : `in ${diffDays} day${diffDays === 1 ? "" : "s"}`;
 
                         return (
                             <div
                                 key={project._id}
-                                className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+                                className="rounded-lg border border-slate-200 bg-white p-4 transition hover:border-slate-300"
                             >
-                                <div className="mb-2 flex items-start justify-between gap-2">
-                                    <h3 className="text-sm font-semibold text-gray-900">
+                                <div className="mb-1.5 flex items-start justify-between gap-3">
+                                    <h3 className="text-sm font-semibold leading-snug text-[#0F2D3A]">
                                         {project.title}
                                     </h3>
-                                    <span
-                                        className={`flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium ${status.badge}`}
-                                    >
-                                        <StatusIcon className="h-3 w-3" />
+                                    <span className="flex shrink-0 items-center gap-1.5 pt-0.5 text-[11px] font-medium text-slate-600">
+                                        <span className={`h-1.5 w-1.5 rounded-full ${status.dot}`} />
                                         {status.label}
                                     </span>
                                 </div>
 
-                                <p className="mb-4 text-xs text-gray-500">
-                                    {project.description.slice(0, 50)}...
+                                <p className="mb-3 overflow-hidden break-words line-clamp-2 text-xs leading-relaxed text-slate-500">
+                                    {project.description}
                                 </p>
 
-                                <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
-                                    <div className="flex flex-wrap items-center gap-3 text-[11px] text-gray-500">
-                                        <span className="flex items-center gap-1">
-                                            <Users className="h-3.5 w-3.5" />
-                                            Batch {project.batchId}
-                                        </span>
-                                        <span className="flex items-center gap-1 capitalize">
-                                            <Globe className="h-3.5 w-3.5" />
-                                            {project.domain}
-                                        </span>
-                                        <span className="flex items-center gap-1 capitalize">
-                                            <MapPin className="h-3.5 w-3.5" />
-                                            {project.location}
-                                        </span>
-                                        <span className="flex items-center gap-1">
-                                            <Calendar className="h-3.5 w-3.5" />
-                                            {new Date(project.deadline).toLocaleDateString(
-                                                "en-US",
-                                                { month: "short", day: "numeric", year: "numeric" }
-                                            )}
-                                        </span>
+                                <div className="mb-3 flex items-center text-[11px]">
+                                    <span className="text-slate-400">
+                                        {deadline.toLocaleDateString("en-US", {
+                                            month: "short",
+                                            day: "numeric",
+                                            year: "numeric",
+                                        })}
+                                    </span>
+                                    <span className="mx-1.5 text-slate-300">·</span>
+                                    <span className={isOverdue ? "font-medium text-red-600" : diffDays <= 0 ? "font-medium text-amber-600" : "text-slate-500"}>
+                                        {dueLabel}
+                                    </span>
+                                </div>
+
+                                <div className="flex items-center justify-between gap-3 border-t border-slate-100 pt-3">
+                                    <div className="flex flex-wrap items-center text-[11px] text-slate-500">
+                                        <span>Batch {project.batchId}</span>
+                                        <span className="mx-1.5 text-slate-300">/</span>
+                                        <span className="capitalize">{project.domain}</span>
+                                        <span className="mx-1.5 text-slate-300">/</span>
+                                        <span className="capitalize">{project.location}</span>
                                     </div>
-                                    <button onClick={() => deleteProject(project._id!)} className="text-xs font-medium text-red-600 transition hover:text-red-700 active:scale-[0.98] cursor-pointer">
-                                        Delete Project
+                                    <button
+                                        onClick={() => deleteProject(project._id!)}
+                                        className="text-xs font-medium text-slate-400 transition hover:text-red-600 cursor-pointer"
+                                    >
+                                        Delete
                                     </button>
                                 </div>
                             </div>

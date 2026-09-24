@@ -24,14 +24,14 @@ const Attendance = () => {
 
     if (getAllTeamMembersLoader) {
         return (
-            <div className="flex min-h-screen items-center justify-center">
-                <Loader2 className="h-8 w-8 animate-spin text-gray-500" />
+            <div className="flex min-h-screen items-center justify-center bg-[#F7F8F8]">
+                <Loader2 className="h-8 w-8 animate-spin text-[#0A7E84]" />
             </div>
         );
     }
 
     return (
-        <div className="px-3 py-3 sm:px-6">
+        <div className="min-h-screen bg-[#F7F8F8] px-3 py-3 sm:px-6">
             <div className="mx-auto max-w-5xl">
 
                 {/* Leader-only marking flow */}
