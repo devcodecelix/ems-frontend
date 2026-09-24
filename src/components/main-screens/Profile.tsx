@@ -36,7 +36,7 @@ const Profile = () => {
                         </div>
 
                         <div className="min-w-0">
-                            <p className="truncate text-base font-semibold text-[#0F2D3A]">
+                            <p className="break-all text-base font-semibold text-[#0F2D3A]">
                                 {user.email}
                             </p>
 

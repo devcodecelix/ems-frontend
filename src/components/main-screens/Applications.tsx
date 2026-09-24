@@ -111,7 +111,7 @@ const Applications = () => {
                                         </div>
                                         <div className="min-w-0">
                                             <div className="flex flex-wrap items-center gap-2">
-                                                <p className="truncate text-sm font-semibold text-slate-800">
+                                                <p className="break-words text-sm font-semibold text-slate-800">
                                                     {app.name}
                                                 </p>
                                                 <span
@@ -122,7 +122,7 @@ const Applications = () => {
                                                     {app.role}
                                                 </span>
                                             </div>
-                                            <p className="truncate text-xs text-slate-500">
+                                            <p className="break-all text-xs text-slate-500">
                                                 {app.email}
                                             </p>
                                             <p className="mt-0.5 text-[11px] text-slate-400">
@@ -137,28 +137,28 @@ const Applications = () => {
                                     </div>
 
                                     {/* Batch info */}
-                                    <div className="flex shrink-0 gap-4 rounded-md bg-slate-50 px-3 py-2 text-xs sm:gap-5">
-                                        <div>
+                                    <div className="flex flex-wrap shrink gap-4 rounded-md bg-slate-50 px-3 py-2 text-xs sm:gap-5">
+                                        <div className="min-w-0">
                                             <p className="text-[10px] uppercase tracking-wide text-slate-400">Batch</p>
-                                            <p className="mt-0.5 font-medium text-slate-700">
+                                            <p className="mt-0.5 min-w-0 break-words font-medium text-slate-700">
                                                 {app.batch?.batchId ?? "-"}
                                             </p>
                                         </div>
-                                        <div>
+                                        <div className="min-w-0">
                                             <p className="text-[10px] uppercase tracking-wide text-slate-400">Domain</p>
-                                            <p className="mt-0.5 truncate font-medium capitalize text-slate-700">
+                                            <p className="mt-0.5 break-words font-medium capitalize text-slate-700">
                                                 {app.batch?.domain ?? "-"}
                                             </p>
                                         </div>
-                                        <div>
+                                        <div className="min-w-0">
                                             <p className="text-[10px] uppercase tracking-wide text-slate-400">Ref No</p>
-                                            <p className="mt-0.5 truncate font-medium text-slate-700">
+                                            <p className="mt-0.5 break-words font-medium text-slate-700">
                                                 {app.batch?.referenceNo ?? "-"}
                                             </p>
                                         </div>
-                                        <div>
+                                        <div className="min-w-0">
                                             <p className="text-[10px] uppercase tracking-wide text-slate-400">Location</p>
-                                            <p className="mt-0.5 truncate font-medium text-slate-700">
+                                            <p className="mt-0.5 break-words font-medium text-slate-700">
                                                 {app.batch?.location ?? "-"}
                                             </p>
                                         </div>

@@ -68,10 +68,10 @@ const InternDetails = ({
                         <Users className="h-5 w-5 text-slate-500" />
                     </div>
                     <div className="min-w-0">
-                        <p className="truncate text-sm font-semibold text-slate-800">
+                        <p className="break-words text-sm font-semibold text-slate-800">
                             {selectedIntern?.name ?? "-"}
                         </p>
-                        <p className="truncate text-xs font-normal text-slate-500">
+                        <p className="break-all text-xs font-normal text-slate-500">
                             {selectedIntern?.email}
                         </p>
                     </div>
@@ -86,7 +86,7 @@ const InternDetails = ({
                             <p className="text-[11px] uppercase tracking-wide text-slate-400">
                                 Email
                             </p>
-                            <p className="truncate text-sm font-medium text-slate-700">
+                            <p className="break-all text-sm font-medium text-slate-700">
                                 {selectedIntern.email}
                             </p>
                         </div>

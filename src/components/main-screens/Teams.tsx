@@ -103,7 +103,7 @@ const Teams = () => {
                                         </div>
 
                                         <div className="min-w-0">
-                                            <p className="break-words text-sm font-medium text-slate-700">
+                                            <p className="break-all text-sm font-medium text-slate-700">
                                                 {intern.email}
                                             </p>
                                             <p className="mt-0.5 break-words text-xs text-slate-500">
