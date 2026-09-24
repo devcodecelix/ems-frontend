@@ -202,7 +202,7 @@ const ProjectAdminPannel = () => {
                                     </span>
                                 </div>
 
-                                <p className="mb-3 overflow-hidden break-words line-clamp-2 text-xs leading-relaxed text-slate-500">
+                                <p className="mb-3 break-words text-xs leading-relaxed text-slate-500">
                                     {project.description}
                                 </p>
 

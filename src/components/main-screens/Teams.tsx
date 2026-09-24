@@ -94,7 +94,7 @@ const Teams = () => {
                         {filteredInterns.map((intern) => (
                             <div
                                 key={intern._id}
-                                className="rounded-lg border border-slate-200 bg-white p-4"
+                                className="min-w-0 rounded-lg border border-slate-200 bg-white p-4"
                             >
                                 <div className="flex flex-col lg:flex-row items-start justify-between gap-3">
                                     <div className="flex min-w-0 items-center gap-3">
@@ -103,35 +103,35 @@ const Teams = () => {
                                         </div>
 
                                         <div className="min-w-0">
-                                            <p className="truncate text-sm font-medium text-slate-700">
+                                            <p className="break-words text-sm font-medium text-slate-700">
                                                 {intern.email}
                                             </p>
-                                            <p className="mt-0.5 text-xs text-slate-500">
+                                            <p className="mt-0.5 break-words text-xs text-slate-500">
                                                 {intern.name ?? "-"}
                                             </p>
                                         </div>
                                     </div>
                                     {intern.batch?.leader && (
-                                        <span className="mt-3 inline-block rounded-full bg-[#BFE9E6] px-2 py-1 text-xs font-medium text-[#0A7E84]">
+                                        <span className="mt-3 inline-block shrink-0 rounded-full bg-[#BFE9E6] px-2 py-1 text-xs font-medium text-[#0A7E84]">
                                             Batch Leader
                                         </span>
                                     )}
                                 </div>
 
-                                <div className="mt-3 grid grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-xs text-slate-600 sm:grid-cols-4">
-                                    <div>
+                                <div className="mt-3 grid min-w-0 grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-xs text-slate-600 sm:grid-cols-4">
+                                    <div className="min-w-0 break-words">
                                         <span className="text-slate-400">Batch: </span>
                                         {intern.batch?.batchId ?? "-"}
                                     </div>
-                                    <div>
+                                    <div className="min-w-0 break-words">
                                         <span className="text-slate-400">Team: </span>
                                         {intern.batch?.domain ?? "-"}
                                     </div>
-                                    <div>
+                                    <div className="min-w-0 break-words">
                                         <span className="text-slate-400">Ref: </span>
                                         {intern.batch?.referenceNo ?? "-"}
                                     </div>
-                                    <div>
+                                    <div className="min-w-0 break-words">
                                         <span className="text-slate-400">Location: </span>
                                         {intern.batch?.location ?? "-"}
                                     </div>

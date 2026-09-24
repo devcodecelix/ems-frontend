@@ -99,7 +99,7 @@ const ProjectInternPannel = () => {
               )}
             </div>
 
-            <p className="mb-4 overflow-hidden break-words line-clamp-2 text-xs leading-relaxed text-slate-500">
+            <p className="mb-4 break-words text-xs leading-relaxed text-slate-500">
               {project.description}
             </p>
 

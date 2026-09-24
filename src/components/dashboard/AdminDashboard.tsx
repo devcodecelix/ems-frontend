@@ -71,6 +71,14 @@ const AdminDashboard = () => {
         }
     };
 
+    const currentYear = new Date().getFullYear();
+    const years = [currentYear - 1, currentYear, currentYear + 1];
+    const monthNames = [
+        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+    ];
+    const [selectedYear, selectedMonth] = month.length === 7 ? month.split("-") : [String(currentYear), "01"];
+
     if (getAllInternsLoader) {
         return (
             <div className="flex min-h-screen items-center justify-center bg-[#F7F8F8]">
@@ -134,12 +142,33 @@ const AdminDashboard = () => {
                             <label className="text-[11px] font-semibold uppercase tracking-[0.08em] text-slate-400">
                                 Month
                             </label>
-                            <input
-                                type="month"
-                                value={month}
-                                onChange={(e) => setMonth(e.target.value)}
-                                className="h-10 w-full min-w-0 rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84] [&::-webkit-datetime-edit]:block [&::-webkit-datetime-edit]:w-full [&::-webkit-datetime-edit-fields-wrapper]:flex [&::-webkit-datetime-edit-fields-wrapper]:flex-nowrap [&::-webkit-datetime-edit-fields-wrapper]:overflow-visible"
-                            />
+                            <div className="grid grid-cols-2 gap-2">
+                                <select
+                                    value={selectedMonth}
+                                    onChange={(e) => setMonth(`${selectedYear}-${e.target.value}`)}
+                                    aria-label="Month"
+                                    className="h-10 w-full rounded-md border border-slate-200 bg-white px-2 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84]"
+                                >
+                                    {monthNames.map((name, i) => (
+                                        <option key={name} value={String(i + 1).padStart(2, "0")}>
+                                            {name}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                <select
+                                    value={selectedYear}
+                                    onChange={(e) => setMonth(`${e.target.value}-${selectedMonth}`)}
+                                    aria-label="Year"
+                                    className="h-10 w-full rounded-md border border-slate-200 bg-white px-2 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84]"
+                                >
+                                    {years.map((year) => (
+                                        <option key={year} value={year}>
+                                            {year}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
                         </div>
 
                         <div className="flex min-w-0 flex-1 flex-col gap-1">
