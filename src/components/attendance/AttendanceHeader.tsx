@@ -7,14 +7,12 @@ const AttendanceHeader = ({
     isSaving,
     alreadyMarked,
     handleSave,
-    presentIds
 }: {
     today: string,
     allTeamMembers: User[],
     isSaving: boolean,
     alreadyMarked: boolean,
     handleSave: () => void,
-    presentIds: string[]
 }) => {
 
     return (
@@ -38,7 +36,7 @@ const AttendanceHeader = ({
                 {!alreadyMarked && (
                     <button
                         onClick={handleSave}
-                        disabled={isSaving || allTeamMembers.length === 0 || presentIds.length === 0}
+                        disabled={isSaving || allTeamMembers.length === 0}
                         className="flex items-center gap-2 rounded-lg bg-[#0A7E84] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#075F64] disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         {isSaving && <Loader2 className="h-4 w-4 animate-spin" />}

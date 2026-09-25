@@ -52,7 +52,6 @@ const Attendance = () => {
                                     isSaving={isSaving}
                                     alreadyMarked={alreadyMarked}
                                     handleSave={handleSave}
-                                    presentIds={presentIds}
                                 />
 
                                 <AttendanceList

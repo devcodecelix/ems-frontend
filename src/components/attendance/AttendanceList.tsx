@@ -33,7 +33,7 @@ const AttendanceList = ({
                                         <Users className="h-5 w-5 text-[#0A7E84]" />
                                     </div>
                                     <div className="min-w-0">
-                                        <p className="break-words text-sm font-medium text-slate-700">
+                                        <p className="wrap-break-word text-sm font-medium text-slate-700">
                                             {member.name ?? "-"}
                                         </p>
                                         <p className="break-all text-xs text-slate-500">

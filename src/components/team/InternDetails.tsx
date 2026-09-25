@@ -68,7 +68,7 @@ const InternDetails = ({
                         <Users className="h-5 w-5 text-slate-500" />
                     </div>
                     <div className="min-w-0">
-                        <p className="break-words text-sm font-semibold text-slate-800">
+                        <p className="wrap-break-word text-sm font-semibold text-slate-800">
                             {selectedIntern?.name ?? "-"}
                         </p>
                         <p className="break-all text-xs font-normal text-slate-500">
@@ -79,7 +79,7 @@ const InternDetails = ({
             </DialogHeader>
 
             {selectedIntern && (
-                <div className="mt-2 max-h-[70vh] space-y-3 overflow-y-auto pr-1">
+                <div className="mt-2 max-h-[70vh] space-y-3 overflow-y-hidden pr-1">
                     <div className="flex items-center gap-3 rounded-md bg-slate-50 p-3">
                         <Mail className="h-4 w-4 shrink-0 text-slate-400" />
                         <div className="min-w-0">

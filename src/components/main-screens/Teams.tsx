@@ -102,11 +102,11 @@ const Teams = () => {
                                             <Users className="h-5 w-5 text-[#0A7E84]" />
                                         </div>
 
-                                        <div className="min-w-0">
-                                            <p className="break-all text-sm font-medium text-slate-700">
+                                        <div className="min-w-0 w-0 flex-1">
+                                            <p className="truncate text-sm font-medium text-slate-700">
                                                 {intern.email}
                                             </p>
-                                            <p className="mt-0.5 break-words text-xs text-slate-500">
+                                            <p className="truncate mt-0.5 text-xs text-slate-500">
                                                 {intern.name ?? "-"}
                                             </p>
                                         </div>
@@ -119,19 +119,19 @@ const Teams = () => {
                                 </div>
 
                                 <div className="mt-3 grid min-w-0 grid-cols-2 gap-2 border-t border-slate-100 pt-3 text-xs text-slate-600 sm:grid-cols-4">
-                                    <div className="min-w-0 break-words">
+                                    <div className="min-w-0 wrap-break-word">
                                         <span className="text-slate-400">Batch: </span>
                                         {intern.batch?.batchId ?? "-"}
                                     </div>
-                                    <div className="min-w-0 break-words">
+                                    <div className="min-w-0 wrap-break-word">
                                         <span className="text-slate-400">Team: </span>
                                         {intern.batch?.domain ?? "-"}
                                     </div>
-                                    <div className="min-w-0 break-words">
+                                    <div className="min-w-0 wrap-break-word">
                                         <span className="text-slate-400">Ref: </span>
                                         {intern.batch?.referenceNo ?? "-"}
                                     </div>
-                                    <div className="min-w-0 break-words">
+                                    <div className="min-w-0 wrap-break-word">
                                         <span className="text-slate-400">Location: </span>
                                         {intern.batch?.location ?? "-"}
                                     </div>

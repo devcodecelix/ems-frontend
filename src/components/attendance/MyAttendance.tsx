@@ -44,7 +44,7 @@ const MyAttendance = ({ getMyAttendance, getAttendanceLoader, attendance }: {
                         </p>
                         <div className="max-h-72 space-y-2 overflow-y-auto pr-1">
                             {attendance.map((record) => {
-                                const isPresent = record.status !== "absent";
+                                console.log("record", record);
                                 return (
                                     <div
                                         key={record._id}
@@ -60,12 +60,12 @@ const MyAttendance = ({ getMyAttendance, getAttendanceLoader, attendance }: {
                                         </p>
                                         <span
                                             className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-medium ${
-                                                isPresent
+                                                record.status === "present"
                                                     ? "bg-green-100 text-green-700"
                                                     : "bg-red-100 text-red-700"
                                             }`}
                                         >
-                                            {isPresent ? "Present" : "Absent"}
+                                            {record.status === "present" ? "Present" : "Absent"}
                                         </span>
                                     </div>
                                 );
