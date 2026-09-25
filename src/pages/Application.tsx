@@ -374,7 +374,7 @@ const Application = () => {
                     <div className="mt-6 text-center">
                         <button
                             onClick={useAuthStore.getState().logout}
-                            className="text-sm font-medium text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded-md transition"
+                            className="flex w-full items-center justify-center gap-2 rounded-md bg-[#0A7E84] py-3 text-sm font-medium text-white transition hover:bg-[#075F64]"
                         >
                             Logout
                         </button>
