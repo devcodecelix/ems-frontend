@@ -19,6 +19,12 @@ const ProjectInternPannel = () => {
   const { user } = useAuthStore();
   const isBatchLeader = user?.batch?.leader === true;
 
+  const isDeadlineActive = (deadline: string | Date) => {
+    const end = new Date(deadline);
+    end.setHours(23, 59, 59, 999); // din ke end tak valid
+    return end >= new Date();
+  };
+
   useEffect(() => {
     if (projects.length !== 0) return;
     getAllProjects();
@@ -88,7 +94,7 @@ const ProjectInternPannel = () => {
             className="rounded-lg border border-slate-200 bg-white p-4"
           >
             <div className="mb-2 flex items-start justify-between gap-3">
-              <h3 className="min-w-0 break-words text-sm font-semibold text-[#0F2D3A]">
+              <h3 className="min-w-0 wrap-break-word text-sm font-semibold text-[#0F2D3A]">
                 {project.title}
               </h3>
               {project.status === "completed" && (
@@ -99,7 +105,7 @@ const ProjectInternPannel = () => {
               )}
             </div>
 
-            <p className="mb-4 break-words text-xs leading-relaxed text-slate-500">
+            <p className="mb-4 wrap-break-word text-xs leading-relaxed text-slate-500">
               {project.description}
             </p>
 
@@ -127,7 +133,7 @@ const ProjectInternPannel = () => {
                 </span>
               </div>
 
-              {isBatchLeader && new Date(project.deadline) < new Date() && (
+              {isBatchLeader && isDeadlineActive(project.deadline) && (
                 <button
                   onClick={() => markAsCompleted(project._id!)}
                   disabled={project.status === "completed"}

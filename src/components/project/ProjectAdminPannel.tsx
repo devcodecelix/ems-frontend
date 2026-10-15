@@ -1,9 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import {
-    FolderKanban,
-    Plus,
-    Loader2,
-} from "lucide-react";
+import { FolderKanban, Plus, Loader2 } from "lucide-react";
 import AddNewProject from "../project/AddNewProject";
 import {
     Dialog,
@@ -18,31 +14,38 @@ import axiosInstance from "../../lib/axios";
 
 type ProjectStatus = "submitted" | "pending" | "overdue";
 
+const MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+const startOfDay = (d: Date) =>
+    new Date(d.getFullYear(), d.getMonth(), d.getDate());
+
+// deadline wala poora din valid hai (din ke end tak)
+const isDeadlineActive = (deadline: string | Date) => {
+    const end = new Date(deadline);
+    end.setHours(23, 59, 59, 999);
+    return end.getTime() >= Date.now();
+};
+
+// aaj = 0, kal = 1, kal guzra = -1
+const getDaysDiff = (deadline: string | Date) =>
+    Math.round(
+        (startOfDay(new Date(deadline)).getTime() -
+            startOfDay(new Date()).getTime()) /
+            MS_PER_DAY
+    );
+
 const getStatus = (project: Project): ProjectStatus => {
     if (project.status === "completed") return "submitted";
-    const isOverdue = new Date(project.deadline).getTime() < Date.now();
-    return isOverdue ? "overdue" : "pending";
+    return isDeadlineActive(project.deadline) ? "pending" : "overdue";
 };
 
-const statusMeta: Record<
-    ProjectStatus,
-    { label: string; dot: string }
-> = {
-    submitted: {
-        label: "Submitted",
-        dot: "bg-green-500",
-    },
-    pending: {
-        label: "Pending",
-        dot: "bg-amber-500",
-    },
-    overdue: {
-        label: "Overdue",
-        dot: "bg-red-500",
-    },
+const statusMeta: Record<ProjectStatus, { label: string; dot: string }> = {
+    submitted: { label: "Submitted", dot: "bg-green-500" },
+    pending: { label: "Pending", dot: "bg-amber-500" },
+    overdue: { label: "Overdue", dot: "bg-red-500" },
 };
 
-type FilterKey = "all" | "submitted" | "pending" | "not-submitted" | "overdue";
+type FilterKey = "all" | ProjectStatus;
 
 const filterOptions: { key: FilterKey; label: string }[] = [
     { key: "all", label: "All" },
@@ -50,7 +53,6 @@ const filterOptions: { key: FilterKey; label: string }[] = [
     { key: "pending", label: "Pending" },
     { key: "overdue", label: "Overdue" },
 ];
-
 
 const ProjectAdminPannel = () => {
     const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
@@ -61,6 +63,7 @@ const ProjectAdminPannel = () => {
     useEffect(() => {
         if (projects.length !== 0) return;
         getAllProjects();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [getAllProjects]);
 
     const projectsWithStatus = useMemo(
@@ -72,50 +75,36 @@ const ProjectAdminPannel = () => {
         [projects]
     );
 
-    const counts = useMemo(() => {
-        return {
+    const counts = useMemo(
+        () => ({
             all: projectsWithStatus.length,
-            submitted: projectsWithStatus.filter((p) => p.status === "submitted")
-                .length,
-            pending: projectsWithStatus.filter((p) => p.status === "pending")
-                .length,
-            "not-submitted": projectsWithStatus.filter((p) => !p.status || p.status === "pending")
-                .length,
-            overdue: projectsWithStatus.filter((p) => p.status === "overdue")
-                .length,
-        };
-    }, [projectsWithStatus]);
+            submitted: projectsWithStatus.filter((p) => p.status === "submitted").length,
+            pending: projectsWithStatus.filter((p) => p.status === "pending").length,
+            overdue: projectsWithStatus.filter((p) => p.status === "overdue").length,
+        }),
+        [projectsWithStatus]
+    );
 
     const filteredProjects = useMemo(() => {
-        switch (activeFilter) {
-            case "submitted":
-                return projectsWithStatus.filter((p) => p.status === "submitted");
-            case "pending":
-                return projectsWithStatus.filter((p) => p.status === "pending");
-            case "overdue":
-                return projectsWithStatus.filter((p) => p.status === "overdue");
-            default:
-                return projectsWithStatus;
-        }
+        if (activeFilter === "all") return projectsWithStatus;
+        return projectsWithStatus.filter((p) => p.status === activeFilter);
     }, [activeFilter, projectsWithStatus]);
 
     const deleteProject = async (projectId: string) => {
         useAdminStore.getState().removeProject(projectId);
         await axiosInstance.delete(`/api/v5/admin/project/${projectId}`);
-    }
+    };
 
     return (
         <div className="mx-auto max-w-5xl">
             {/* Header */}
             <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-                    <div>
-                        <h1 className="text-xl font-semibold text-[#0F2D3A]">
-                            Projects
-                        </h1>
-                        <p className="mt-0.5 text-xs text-slate-500">
-                            Manage projects assigned to teams/batches
-                        </p>
-                    </div>
+                <div>
+                    <h1 className="text-xl font-semibold text-[#0F2D3A]">Projects</h1>
+                    <p className="mt-0.5 text-xs text-slate-500">
+                        Manage projects assigned to teams/batches
+                    </p>
+                </div>
 
                 <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
                     <DialogTrigger className="flex items-center gap-2 rounded-md bg-[#0A7E84] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#075F64]">
@@ -139,17 +128,19 @@ const ProjectAdminPannel = () => {
                         <button
                             key={option.key}
                             onClick={() => setActiveFilter(option.key)}
-                            className={`flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium transition ${isActive
-                                ? "border-[#0A7E84] bg-[#BFE9E6] text-[#0A7E84]"
-                                : "border-slate-200 bg-white text-slate-600 hover:border-[#0A7E84] hover:text-[#0A7E84]"
-                                }`}
+                            className={`flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-xs font-medium transition ${
+                                isActive
+                                    ? "border-[#0A7E84] bg-[#BFE9E6] text-[#0A7E84]"
+                                    : "border-slate-200 bg-white text-slate-600 hover:border-[#0A7E84] hover:text-[#0A7E84]"
+                            }`}
                         >
                             {option.label}
                             <span
-                                className={`rounded-full px-1.5 text-[10px] ${isActive
-                                    ? "bg-white text-[#0A7E84]"
-                                    : "bg-slate-100 text-slate-500"
-                                    }`}
+                                className={`rounded-full px-1.5 text-[10px] ${
+                                    isActive
+                                        ? "bg-white text-[#0A7E84]"
+                                        : "bg-slate-100 text-slate-500"
+                                }`}
                             >
                                 {counts[option.key]}
                             </span>
@@ -175,15 +166,13 @@ const ProjectAdminPannel = () => {
                     {filteredProjects.map((project) => {
                         const status = statusMeta[project.status];
                         const deadline = new Date(project.deadline);
-                        const diffDays = Math.round(
-                            (deadline.getTime() - Date.now()) / (1000 * 60 * 60 * 24)
-                        );
+                        const diffDays = getDaysDiff(project.deadline);
                         const isOverdue = project.status === "overdue";
+                        const isToday = diffDays === 0;
+
                         const dueLabel = isOverdue
-                            ? diffDays <= 0
-                                ? "Overdue today"
-                                : `${Math.abs(diffDays)} days overdue`
-                            : diffDays <= 0
+                            ? `${Math.abs(diffDays)} day${Math.abs(diffDays) === 1 ? "" : "s"} overdue`
+                            : isToday
                                 ? "Due today"
                                 : `in ${diffDays} day${diffDays === 1 ? "" : "s"}`;
 
@@ -193,7 +182,7 @@ const ProjectAdminPannel = () => {
                                 className="rounded-lg border border-slate-200 bg-white p-4 transition hover:border-slate-300"
                             >
                                 <div className="mb-1.5 flex items-start justify-between gap-3">
-                                    <h3 className="min-w-0 break-words text-sm font-semibold leading-snug text-[#0F2D3A]">
+                                    <h3 className="min-w-0 wrap-break-word text-sm font-semibold leading-snug text-[#0F2D3A]">
                                         {project.title}
                                     </h3>
                                     <span className="flex shrink-0 items-center gap-1.5 pt-0.5 text-[11px] font-medium text-slate-600">
@@ -202,7 +191,7 @@ const ProjectAdminPannel = () => {
                                     </span>
                                 </div>
 
-                                <p className="mb-3 break-words text-xs leading-relaxed text-slate-500">
+                                <p className="mb-3 wrap-break-word text-xs leading-relaxed text-slate-500">
                                     {project.description}
                                 </p>
 
@@ -215,7 +204,15 @@ const ProjectAdminPannel = () => {
                                         })}
                                     </span>
                                     <span className="mx-1.5 text-slate-300">·</span>
-                                    <span className={isOverdue ? "font-medium text-red-600" : diffDays <= 0 ? "font-medium text-amber-600" : "text-slate-500"}>
+                                    <span
+                                        className={
+                                            isOverdue
+                                                ? "font-medium text-red-600"
+                                                : isToday
+                                                    ? "font-medium text-amber-600"
+                                                    : "text-slate-500"
+                                        }
+                                    >
                                         {dueLabel}
                                     </span>
                                 </div>
@@ -230,7 +227,7 @@ const ProjectAdminPannel = () => {
                                     </div>
                                     <button
                                         onClick={() => deleteProject(project._id!)}
-                                        className="flex shrink-0 items-center gap-1 rounded-md border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-600 transition hover:border-red-300 hover:bg-red-100 cursor-pointer"
+                                        className="flex shrink-0 cursor-pointer items-center gap-1 rounded-md border border-red-200 bg-red-50 px-2.5 py-1 text-[11px] font-medium text-red-600 transition hover:border-red-300 hover:bg-red-100"
                                     >
                                         Delete
                                     </button>
@@ -241,7 +238,7 @@ const ProjectAdminPannel = () => {
                 </div>
             )}
         </div>
-    )
-}
+    );
+};
 
-export default ProjectAdminPannel
+export default ProjectAdminPannel;
