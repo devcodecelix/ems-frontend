@@ -171,9 +171,10 @@ const AddNewProject = ({ onSuccess }: { onSuccess: () => void }) => {
                   className={selectClass}
                 >
                   <option value="">Select</option>
-                  <option value="web">Web</option>
-                  <option value="app">App</option>
-                  <option value="ai">AI</option>
+                  <option value="WEB">Web Development</option>
+                  <option value="APP">App Development</option>
+                  <option value="AI">Artificial Intelligence</option>
+                  <option value="UIUX">UI/UX Design</option>
                 </select>
               </div>
             </div>

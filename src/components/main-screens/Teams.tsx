@@ -69,9 +69,10 @@ const Teams = () => {
                         className="h-10 w-full rounded-md border border-slate-200 bg-white px-3 text-sm text-slate-700 outline-none transition focus:border-[#0A7E84] focus:ring-1 focus:ring-[#0A7E84] sm:w-48"
                     >
                         <option value="all">All Domains</option>
-                        <option value="web">Web</option>
-                        <option value="ai">AI</option>
-                        <option value="app">App</option>
+                        <option value="WEB">Web Development</option>
+                        <option value="AI">Artificial Intelligence</option>
+                        <option value="APP">App Development</option>
+                        <option value="UIUX">UI/UX Design</option>
                     </select>
 
                     <select
@@ -102,7 +103,7 @@ const Teams = () => {
                                             <Users className="h-5 w-5 text-[#0A7E84]" />
                                         </div>
 
-                                        <div className="min-w-0 w-0 flex-1">
+                                        <div className="min-w-0 flex-1">
                                             <p className="truncate text-sm font-medium text-slate-700">
                                                 {intern.email}
                                             </p>

@@ -82,14 +82,14 @@ const Profile = () => {
 
                         {user.role !== "admin" && <div className="flex items-center justify-between gap-3 text-sm">
                             <span className="shrink-0 text-slate-500">Reference No</span>
-                            <span className="min-w-0 text-right break-words text-slate-700">
+                            <span className="min-w-0 text-right wrap-break-word text-slate-700">
                                 {user.batch?.referenceNo ?? "-"}
                             </span>
                         </div>}
 
                         <div className="flex items-center justify-between gap-3 text-sm">
                             <span className="shrink-0 text-slate-500">Joined</span>
-                            <span className="min-w-0 text-right break-words text-slate-700">
+                            <span className="min-w-0 text-right wrap-break-word text-slate-700">
                                 {new Date(user.createdAt).toLocaleDateString()}
                             </span>
                         </div>

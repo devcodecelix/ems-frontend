@@ -8,6 +8,7 @@ export interface User {
     batchId?: number;
     domain?: "web" | "ai" | "app";
     referenceNo?: string;
+    rollNo?: string;
     leader?: boolean;
     location?: "remote" | "onsite";
   };
@@ -17,6 +18,7 @@ export interface User {
 
 export interface AttendanceRecord {
   _id: string;
+  rollNo: string;
   referenceNo: string;
   batchId: number;
   domain: string;

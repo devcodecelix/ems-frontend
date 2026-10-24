@@ -7,7 +7,7 @@ import { Loader2 } from "lucide-react";
 interface FormState {
     batchId: string;
     domain: string;
-    referenceNo: string;
+    rollNo: string;
     name: string;
     location: string;
 }
@@ -15,17 +15,31 @@ interface FormState {
 interface FieldErrors {
     batchId?: string;
     domain?: string;
-    referenceNo?: string;
+    rollNo?: string;
     name?: string;
     location?: string;
 }
+
+// Batch 17 - 30
+const BATCHES = Array.from({ length: 14 }, (_, i) => 17 + i);
+// Roll no 01 - 50
+const ROLL_NUMBERS = Array.from({ length: 50 }, (_, i) =>
+    String(i + 1).padStart(2, "0")
+);
+
+const fieldClass = (hasError?: boolean) =>
+    `h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${
+        hasError
+            ? "border-red-400 focus:border-red-500 focus:ring-red-500"
+            : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
+    }`;
 
 const Application = () => {
     const { user, updateUser } = useAuthStore();
     const [form, setForm] = useState<FormState>({
         batchId: "",
         domain: "",
-        referenceNo: "",
+        rollNo: "",
         name: "",
         location: "",
     });
@@ -40,31 +54,26 @@ const Application = () => {
         }
     }, [user]);
 
+    // B17-web-01
+    const referenceNo =
+        form.batchId && form.domain && form.rollNo
+            ? `B${form.batchId}-${form.domain}-${form.rollNo}`
+            : "";
+
+    const handleChange = (field: keyof FormState, value: string) => {
+        setForm((prev) => ({ ...prev, [field]: value }));
+        setFieldErrors((prev) => ({ ...prev, [field]: undefined }));
+    };
+
     const validate = (): boolean => {
-        const { batchId, domain, referenceNo, name, location } = form;
+        const { batchId, domain, rollNo, name, location } = form;
         const errors: FieldErrors = {};
 
-        if (!name.trim()) {
-            errors.name = "Name is required.";
-        }
-
-        if (!batchId) {
-            errors.batchId = "Please select your batch.";
-        }
-
-        if (!domain) {
-            errors.domain = "Please select your domain.";
-        }
-
-        if (!location) {
-            errors.location = "Please select your location.";
-        }
-
-        if (!referenceNo.trim()) {
-            errors.referenceNo = "Please enter your reference number.";
-        } else if (!referenceNo.trim().startsWith("CC")) {
-            errors.referenceNo = "Invalid reference number.";
-        }
+        if (!name.trim()) errors.name = "Name is required.";
+        if (!batchId) errors.batchId = "Please select your batch.";
+        if (!domain) errors.domain = "Please select your domain.";
+        if (!rollNo) errors.rollNo = "Please select your roll number.";
+        if (!location) errors.location = "Please select your location.";
 
         setFieldErrors(errors);
         return Object.keys(errors).length === 0;
@@ -73,23 +82,18 @@ const Application = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
 
-        if (!validate()) {
-            return;
-        }
+        if (!validate()) return;
 
         setIsSubmitting(true);
 
         try {
-            const response = await axiosInstance.post(
-                "/api/v2/application",
-                {
-                    batchId: Number(form.batchId),
-                    domain: form.domain,
-                    referenceNo: form.referenceNo.trim(),
-                    name: form.name.trim(),
-                    location: form.location,
-                }
-            );
+            const response = await axiosInstance.post("/api/v2/application", {
+                batchId: Number(form.batchId),
+                domain: form.domain,
+                rollNo: form.rollNo,
+                name: form.name.trim(),
+                location: form.location,
+            });
 
             updateUser(response.data);
             setAlreadySubmitted(true);
@@ -97,8 +101,7 @@ const Application = () => {
             toast.success("Application submitted successfully!");
         } catch (error: any) {
             toast.error(
-                error.response?.data?.message ||
-                "Failed to submit application."
+                error.response?.data?.message || "Failed to submit application."
             );
         } finally {
             setIsSubmitting(false);
@@ -109,8 +112,8 @@ const Application = () => {
         !!form.name.trim() &&
         !!form.batchId &&
         !!form.domain &&
-        !!form.location &&
-        !!form.referenceNo.trim();
+        !!form.rollNo &&
+        !!form.location;
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-[#F7F8F8] px-4 py-10">
@@ -194,15 +197,11 @@ const Application = () => {
                                     type="text"
                                     value={form.name}
                                     disabled={isSubmitting}
-                                    onChange={(e) => {
-                                        setForm({ ...form, name: e.target.value });
-                                        setFieldErrors((prev) => ({ ...prev, name: undefined }));
-                                    }}
+                                    onChange={(e) =>
+                                        handleChange("name", e.target.value)
+                                    }
                                     placeholder="Enter your full name"
-                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.name
-                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
-                                        }`}
+                                    className={fieldClass(!!fieldErrors.name)}
                                 />
                             </div>
 
@@ -225,23 +224,17 @@ const Application = () => {
                                     id="batchId"
                                     value={form.batchId}
                                     disabled={isSubmitting}
-                                    onChange={(e) => {
-                                        setForm({ ...form, batchId: e.target.value });
-                                        setFieldErrors((prev) => ({ ...prev, batchId: undefined }));
-                                    }}
-                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.batchId
-                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
-                                        }`}
+                                    onChange={(e) =>
+                                        handleChange("batchId", e.target.value)
+                                    }
+                                    className={fieldClass(!!fieldErrors.batchId)}
                                 >
-                                    <option value="">
-                                        Select your batch
-                                    </option>
-                                    <option value="13">Batch 13</option>
-                                    <option value="14">Batch 14</option>
-                                    <option value="15">Batch 15</option>
-                                    <option value="16">Batch 16</option>
-                                    <option value="17">Batch 17</option>
+                                    <option value="">Select your batch</option>
+                                    {BATCHES.map((b) => (
+                                        <option key={b} value={b}>
+                                            Batch {b}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
 
@@ -264,28 +257,65 @@ const Application = () => {
                                     id="domain"
                                     value={form.domain}
                                     disabled={isSubmitting}
-                                    onChange={(e) => {
-                                        setForm({ ...form, domain: e.target.value });
-                                        setFieldErrors((prev) => ({ ...prev, domain: undefined }));
-                                    }}
-                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
-                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
-                                        }`}
+                                    onChange={(e) =>
+                                        handleChange("domain", e.target.value)
+                                    }
+                                    className={fieldClass(!!fieldErrors.domain)}
                                 >
-                                    <option value="">
-                                        Select your domain
-                                    </option>
-                                    <option value="web">Web Development</option>
-                                    <option value="ai">Artificial Intelligence</option>
-                                    <option value="app">App Development</option>
+                                    <option value="">Select your domain</option>
+                                    <option value="WEB">Web Development</option>
+                                    <option value="AI">Artificial Intelligence</option>
+                                    <option value="APP">App Development</option>
+                                    <option value="UIUX">UI/UX Design</option>
                                 </select>
                             </div>
 
-                            {/* location */}
+                            {/* Roll No */}
                             <div>
                                 <label
-                                    htmlFor="domain"
+                                    htmlFor="rollNo"
+                                    className="mb-2 block text-sm font-medium text-slate-700"
+                                >
+                                    Roll No
+                                </label>
+
+                                {fieldErrors.rollNo && (
+                                    <p className="mb-1 text-sm text-red-500">
+                                        {fieldErrors.rollNo}
+                                    </p>
+                                )}
+
+                                <select
+                                    id="rollNo"
+                                    value={form.rollNo}
+                                    disabled={isSubmitting}
+                                    onChange={(e) =>
+                                        handleChange("rollNo", e.target.value)
+                                    }
+                                    className={fieldClass(!!fieldErrors.rollNo)}
+                                >
+                                    <option value="">Select your roll number</option>
+                                    {ROLL_NUMBERS.map((r) => (
+                                        <option key={r} value={r}>
+                                            {r}
+                                        </option>
+                                    ))}
+                                </select>
+
+                                {referenceNo && (
+                                    <p className="mt-2 text-xs text-slate-500">
+                                        Reference No:{" "}
+                                        <span className="font-semibold text-[#0A7E84]">
+                                            {referenceNo}
+                                        </span>
+                                    </p>
+                                )}
+                            </div>
+
+                            {/* Location */}
+                            <div>
+                                <label
+                                    htmlFor="location"
                                     className="mb-2 block text-sm font-medium text-slate-700"
                                 >
                                     Location
@@ -298,56 +328,18 @@ const Application = () => {
                                 )}
 
                                 <select
-                                    id="domain"
+                                    id="location"
                                     value={form.location}
                                     disabled={isSubmitting}
-                                    onChange={(e) => {
-                                        setForm({ ...form, location: e.target.value });
-                                        setFieldErrors((prev) => ({ ...prev, location: undefined }));
-                                    }}
-                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.domain
-                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
-                                        }`}
+                                    onChange={(e) =>
+                                        handleChange("location", e.target.value)
+                                    }
+                                    className={fieldClass(!!fieldErrors.location)}
                                 >
-                                    <option value="">
-                                        Select your domain
-                                    </option>
+                                    <option value="">Select your location</option>
                                     <option value="onsite">Onsite</option>
                                     <option value="remote">Remote</option>
                                 </select>
-                            </div>
-
-                            {/* Reference Number */}
-                            <div>
-                                <label
-                                    htmlFor="referenceNo"
-                                    className="mb-2 block text-sm font-medium text-slate-700"
-                                >
-                                    Reference Number
-                                </label>
-
-                                {fieldErrors.referenceNo && (
-                                    <p className="mb-1 text-sm text-red-500">
-                                        {fieldErrors.referenceNo}
-                                    </p>
-                                )}
-
-                                <input
-                                    id="referenceNo"
-                                    type="text"
-                                    value={form.referenceNo}
-                                    disabled={isSubmitting}
-                                    onChange={(e) => {
-                                        setForm({ ...form, referenceNo: e.target.value });
-                                        setFieldErrors((prev) => ({ ...prev, referenceNo: undefined }));
-                                    }}
-                                    placeholder="CC101"
-                                    className={`h-11 w-full rounded-md border bg-white px-3 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:ring-1 disabled:cursor-not-allowed disabled:opacity-60 ${fieldErrors.referenceNo
-                                        ? "border-red-400 focus:border-red-500 focus:ring-red-500"
-                                        : "border-slate-200 focus:border-[#0A7E84] focus:ring-[#0A7E84]"
-                                        }`}
-                                />
                             </div>
 
                             {/* Submit */}
@@ -383,6 +375,6 @@ const Application = () => {
             </div>
         </div>
     );
-}
+};
 
 export default Application;
