@@ -3,6 +3,7 @@ import axiosInstance from "../lib/axios";
 import { toast } from "react-toastify";
 import useAuthStore from "../store/useAuthStore";
 import { Loader2 } from "lucide-react";
+import { batchOptions } from "../lib/batches";
 
 interface FormState {
     batchId: string;
@@ -20,8 +21,6 @@ interface FieldErrors {
     location?: string;
 }
 
-// Batch 17 - 30
-const BATCHES = Array.from({ length: 14 }, (_, i) => 17 + i);
 // Roll no 01 - 50
 const ROLL_NUMBERS = Array.from({ length: 50 }, (_, i) =>
     String(i + 1).padStart(2, "0")
@@ -230,7 +229,7 @@ const Application = () => {
                                     className={fieldClass(!!fieldErrors.batchId)}
                                 >
                                     <option value="">Select your batch</option>
-                                    {BATCHES.map((b) => (
+                                    {batchOptions.map((b) => (
                                         <option key={b} value={b}>
                                             Batch {b}
                                         </option>

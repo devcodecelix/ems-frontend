@@ -54,7 +54,7 @@ const InternDashboard = () => {
                                                 <p className="break-all text-sm font-medium text-slate-700">
                                                     {intern.email}
                                                 </p>
-                                                <p className="mt-0.5 break-words text-xs text-slate-500">
+                                                <p className="mt-0.5 wrap-break-word text-xs text-slate-500">
                                                     {intern.name ?? "-"}
                                                 </p>
                                             </div>
@@ -67,15 +67,15 @@ const InternDashboard = () => {
                                     </div>
 
                                     <div className="mt-3 grid min-w-0 grid-cols-3 gap-2 border-t border-slate-100 pt-3 text-xs text-slate-600">
-                                        <div className="min-w-0 break-words">
+                                        <div className="min-w-0 wrap-break-word">
                                             <span className="text-slate-400">Batch: </span>
                                             {intern.batch?.batchId ?? "-"}
                                         </div>
-                                        <div className="min-w-0 break-words">
+                                        <div className="min-w-0 wrap-break-word">
                                             <span className="text-slate-400">Team: </span>
                                             {intern.batch?.domain ?? "-"}
                                         </div>
-                                        <div className="min-w-0 break-words">
+                                        <div className="min-w-0 wrap-break-word">
                                             <span className="text-slate-400">Ref: </span>
                                             {intern.batch?.referenceNo ?? "-"}
                                         </div>
